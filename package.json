@@ -1,0 +1,27 @@
+{
+  "name": "tcc",
+  "version": "1.0.0",
+  "description": "Painel de gestão do Cyber-Collect, uma plataforma digital voltada ao varejo de informática e produtos geek. O projeto visa integrar funcionalidades avançadas de gerenciamento de inventário e fidelização de clientes, consolidando os conhecimentos técnicos em arquitetura de software e experiência do usuário (UX) adquiridos durante a graduação em Tecnologia.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node .",
+    "init-db": "node src/db/init.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianojosez/tcc.git"
+  },
+  "keywords": [],
+  "author": "Adriano José",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrianojosez/tcc/issues"
+  },
+  "homepage": "https://github.com/adrianojosez/tcc#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "sqlite": "^4.0.25",
+    "sqlite3": "^5.0.2"
+  }
+}

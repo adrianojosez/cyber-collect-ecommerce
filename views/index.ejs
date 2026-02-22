@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:image" content="/images/logo.svg" />
+    <meta name="author" content="Adriano José" />
+    <meta 
+      name="description" 
+      content="Cyber-Collect: Sistema de e-commerce especializado em hardware e colecionáveis, desenvolvido para o TCC de ADS - FATEC Baixada Santista." 
+    />
+    <link rel="icon" href="/images/fav.svg" type="image/icon type" />
+    <title>Loja Informática | <%- title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/index.css" />
+  </head>
+
+  <body>
+    <!-- Cabeçalho -->
+    <header class="header container">
+      <div>
+
+        <!-- <a class="header__logo" href="/" id="header">
+          <img
+            class="header__logo--img"
+            src="/images/logo.svg"
+            alt="Loja Informática"
+          />
+        </a> -->
+        
+        <a class="header__logo" href="/" id="header" style="text-decoration: none;">
+          <span style="font-family: 'Press Start 2P', cursive; color: #2A7AE4; font-size: 14px;">Cyber_Collect</span>  
+        </a>
+
+        <form action="/search" method="POST" class="header__form">
+          <label for="h__input" class="sr-only">
+            Digite o que está procurando
+          </label>
+          <input
+            type="search"
+            id="h__input"
+            name="search"
+            class="header__input"
+            minlength="3"
+            placeholder="O que deseja procurar?"
+          />
+          <button type="submit" style="display: none"></button>
+        </form>
+      </div>
+      <%- button %>
+      <!-- <a class="header__button button__void button" href="login">Login</a> -->
+      <i class="header__search icon-search"></i>
+      <i class="header__search icon-plus"></i>
+    </header>
+
+    <main>
+      <!-- The page will render the correct page according to the URL/routes -->
+      <%- include(`parts/${page}`) %>
+    </main>
+
+    <!-- Contato -->
+    <section class="contact container">
+      <div class="contact__links">
+        <a class="contact__links--logo" href="#header">
+          <img src="/images/logo.svg" alt="TCC" />
+        </a>
+        <ul>
+          <li><a href="#">Quem somos nós</a></li>
+          <li><a href="#">Política de privacidade</a></li>
+          <li><a href="#">Programa fidelidade</a></li>
+          <li><a href="#">Nossas lojas</a></li>
+          <li><a href="#">Quero ser franqueado</a></li>
+          <li><a href="#">Anuncie aqui</a></li>
+
+          <!-- <li><a href="#">Central de Suporte</a></li> -->
+          <!-- FAQ -->
+
+          <!-- <li><a href="#">Página de Comparativo de Produtos</a></li> -->
+          <!-- Conteúdo: Uma tela onde o usuário seleciona dois produtos (ex: duas placas de vídeo) e o sistema mostra uma tabela comparando as especificações técnicas (Memória, Clock, Preço).
+          Diferencial para o TCC: Isso demonstra que seu banco de dados (db.json) é bem estruturado, permitindo cruzar informações técnicas complexas, o que é muito valorizado em cursos de ADS. -->
+
+          <!-- <li><a href="#">Termos de Uso e Garantia</a></li> -->
+          <!-- Do Software -->
+        </ul>
+      </div>
+
+      <form action="" class="contact__form">
+        <fieldset>
+          <legend>Fale conosco</legend>
+          <label for="name" class="sr-only">Escreva seu nome</label>
+          <input
+            id="name"
+            type="text"
+            class=""
+            data-type="contact"
+            maxlength="40"
+            placeholder="Nome"
+            required
+          />
+          <span role="alert"></span>
+          <label for="message" class="sr-only">Escreva sua mensagem</label>
+          <textarea
+            name=""
+            id="message"
+            class=""
+            data-type="contact"
+            placeholder="Escreva sua mensagem"
+            maxlength="120"
+            required
+          ></textarea>
+          <span role="alert"></span>
+          <button type="submit" class="button__blue button">
+            Enviar mensagem
+          </button>
+        </fieldset>
+      </form>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+      <a
+        href="https://github.com/adrianojosez"
+        target="_blank"
+        aria-labelledby="portfolio"
+      >
+        <i class="icon-logo"></i>
+      </a>
+      <p id="portfolio">
+        Desenvolvido por Adriano
+        <span class="sr-only">(Ver portfolio)</span>
+      </p>
+      <p>2026</p>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-wrapper">
+      <div class="modal">
+        <h2>Excluir produto</h2>
+        <p>Tem certeza que você deseja excluir este produto?</p>
+        <form action="#" method="POST">
+          <!-- Method POST to send data do backend. The action (which will be the URL) will be defined with JS -->
+          <label class="sr-only" for="password">Confirme sua senha admin</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Confirme sua senha"
+            required
+          />
+          <div class="buttons">
+            <div class="button button__blue cancel">Cancelar</div>
+            <button class="button button__red delete">Sim, excluir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="/scripts/main.js"></script>
+    <script type="module" src="/scripts/forms.js"></script>
+    <script src="/scripts/drag-n-drop.js"></script>
+    <script src="https://github.com/codermarcos/simple-mask-money/releases/download/v3.0.0/simple-mask-money.js"></script>
+  </body>
+</html>

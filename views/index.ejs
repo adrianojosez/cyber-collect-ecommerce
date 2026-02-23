@@ -53,7 +53,13 @@
           <button type="submit" style="display: none"></button>
         </form>
       </div>
-      <%- button %>
+      <div class="header__buttons" style="display: flex; gap: 16px; align-items: center;">
+        <button id="theme-toggle" class="button" style="background: none; border: none; cursor: pointer; font-size: 20px;">
+        🌙
+    </button>
+      <%- button %> 
+      <a href="/cadastro" class="button__blue button">Cadastrar</a>
+      </div>
       <!-- <a class="header__button button__void button" href="login">Login</a> -->
       <i class="header__search icon-search"></i>
       <i class="header__search icon-plus"></i>

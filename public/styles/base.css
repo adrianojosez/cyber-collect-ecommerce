@@ -280,3 +280,30 @@ main {
     filter: brightness(0.9); /* Ele escurece um pouquinho */
 }
 
+:root {
+    /* Cores Modo Claro */
+    --bg-body: #F5F5F5;
+    --bg-header: #FFFFFF;
+    --text-color: #464646;
+    --input-bg: #FFFFFF;
+}
+
+[data-theme="dark"] {
+    /* Cores Modo Escuro */
+    --bg-body: #121212;
+    --bg-header: #1E1E1E;
+    --text-color: #E5E5E5;
+    --input-bg: #2D2D2D;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s; /* Transição suave */
+}
+
+.header {
+    background-color: var(--bg-header) !important;
+}
+
+/* Ajuste outros componentes conforme necessário usando var(--text-color) */

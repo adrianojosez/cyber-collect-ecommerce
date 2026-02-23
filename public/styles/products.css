@@ -134,3 +134,9 @@
     transform: scale(1.03);
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
+
+.products__card img {
+    background-color: #f0f0f0;
+    min-height: 150px; /* Garante que o espaço já esteja reservado */
+    border-radius: 8px;
+}

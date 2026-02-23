@@ -244,3 +244,39 @@ input[type='number'] {
 html {
     scroll-behavior: smooth;
 }
+
+/* Cor de destaque ao selecionar textos no site */
+::-selection {
+    background-color: #2A7AE4; /* O azul da sua marca */
+    color: #ffffff; /* Texto branco para dar contraste */
+}
+
+/* Melhora o visual do foco para quem navega via teclado */
+:focus {
+    outline: 3px solid rgba(42, 122, 228, 0.5);
+    outline-offset: 2px;
+}
+
+main {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
+    backdrop-filter: blur(10px); /* O segredo do efeito de vidro */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.button:active {
+    transform: scale(0.95); /* O botão diminui levemente ao ser clicado */
+    filter: brightness(0.9); /* Ele escurece um pouquinho */
+}
+

@@ -1,4 +1,4 @@
-# Alura Geek: site de E-Commerce | 3º Challenge Front-end Alura
+# Repositório do Trabalho de Conclusão de Curso - Cyber-Collect
 
 <div id='top'></div>
 
@@ -6,19 +6,17 @@ _[Read it in English](#English)_
 
 Olá, devs!
 
-Neste repositório você encontrará uma página de e-commerce (versão do administrador) para uma loja online de produtos geek chamada **Alura Geek**, que foi desenvolvida como resultado de um Desafio Front-End (3ª edição) exclusivo para alunos da escola de tecnologia [Alura](https://www.alura.com.br).
+Neste repositório você encontrará uma página de e-commerce (versão do administrador) para uma loja online de produtos.
 
 **Devido à limites impostos pelo serviço de hospedagem, o carregamento inicial da página pode levar alguns segundos.**
-
-Você pode saber um pouco mais como funcionam os _challenges_ da Alura visitando a seção [**🦾 Sobre o desafio**](#challenge).
 
 <!-- prettier-ignore -->
 | 🪧 Vitrine Dev |   |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ✨ Nome        | **TCC** - Challenge Alura |
+| ✨ Nome        | **TCC** - Adriano |
 | 🏷️ Tecnologias | Node, Express, SQLite3, EJS, CSS, JavaScript |
-| 🚀 URL         | [**Acesse o site**](https://adrianojosetcc.glitch.me/) ou veja como rodar localmente em [**⚙️ Como usar**](#howto) |
-| 🔥 Desafio     | [**Protótipo do Figma**](https://www.figma.com/proto/itJpWbvHxSUcUeMPy1lmof/AluraGeek?node-id=55%3A1104&scaling=scale-down&page-id=0%3A1&starting-point-node-id=55%3A1104) |
+| 🚀 URL         | [**Acesse o site**](https://tcc-ct2b.onrender.com/) ou veja como rodar localmente em [**⚙️ Como usar**](#howto) |
+| 🔥 Desafio     | [**Protótipo do Figma**]() |
 
 ### ⚙️ Como usar
 
@@ -129,25 +127,8 @@ E-mail: admin@email.com
 Password: 12345aZ
 ```
 
-### 🦾 About the challenge
-
-The Challenge simulates a real work environment, with tasks required by the designers via **Trello** cards, so students may experience how a real job feels like. It is necessary to communicate and understand what the designers really want from each task, we can choose the technology that best apply for us to develop the code. We can add features and suggest modifications in case we have better ideas and so on.
-
-There are no specific classes for the challenge, so we must go on with the knowledge we have. The instructors prepare a study plan with tips of things we might need in case we wish to do something and don't know exactly how to do it, but it is our part to seek and exchange info with other developers to get the job done.
-
-The Challenge lasts 4 weeks. Every Monday for 3 weeks we will receive new assignments from the designers and should develop what was asked. On week 4 we are free to implement new features or play with styles and othe appearances feats.
-
-The Challenge started at March 14th, 2022.
-
-### 📈 Project stages
-
-- **Week 1:** Development of structure and style. In my case, I have chosen to develop the page using HTML and CSS and soon the HTML page will change content dinamically with EJS.
-- **Week 2:** Implementation of Node.js, Express and EJS to dinamically change HTML content when navigating the website.
-- **Week 3:** Form validations (login, contact and product registration), creation of routes and controllers and implementation of database.
-- **Week 4:** Project conclusion (products registered in database and new product registration/edition functionality).
-
 <a href='#top'>🔼 Back to top</a>
 
 ---
 
-Developed with 🧡 by [@adrianojosez 🍊](https://adrianojose.vercel.app)
+Developed with 🧑🏻‍💻 by [@adrianojosez 🍊](https://tcc-ct2b.onrender.com/)

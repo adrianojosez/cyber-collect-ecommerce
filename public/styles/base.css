@@ -191,3 +191,56 @@ input[type='number'] {
   font-size: 1rem;
   color: var(--black-50);
 }
+
+/* Estilização da Barra de Rolagem (Scrollbar) - Cyber-Collect */
+
+/* 1. Largura da barra */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* 2. Fundo da barra (parte de trás) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* 3. A barra que se move (o "pegador") */
+::-webkit-scrollbar-thumb {
+  background: #2A7AE4; /* O azul padrão do seu logo */
+  border-radius: 10px;
+}
+
+/* 4. Cor da barra quando você passa o mouse */
+::-webkit-scrollbar-thumb:hover {
+  background: #1a5bb8;
+}
+
+/* Botão Voltar ao Topo */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2A7AE4; /* Azul do Cyber_Collect */
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-to-top:hover {
+    background-color: #1a5bb8;
+    transform: translateY(-5px); /* Efeito de flutuar ao passar o mouse */
+}
+
+/* Suavizar a subida da página */
+html {
+    scroll-behavior: smooth;
+}

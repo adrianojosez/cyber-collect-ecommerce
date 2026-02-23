@@ -78,3 +78,9 @@
   justify-content: center;
   margin-bottom: 1rem;
 }
+
+.contact__form input:focus, .contact__form textarea:focus {
+    outline: none;
+    border: 2px solid #2A7AE4; /* O azul do Cyber_Collect */
+    box-shadow: 0 0 8px rgba(42, 122, 228, 0.3);
+}

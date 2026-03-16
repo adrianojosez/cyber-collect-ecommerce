@@ -1,0 +1,50 @@
+.termos {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    min-height: 70vh;
+}
+
+.termos__content {
+    max-width: 850px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.termos__title {
+    color: var(--blue);
+    font-family: var(--press-start);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.termos__date {
+    font-size: 0.8rem;
+    color: var(--black-50);
+    margin-bottom: 2rem;
+}
+
+.termos__text h3 {
+    margin-top: 2rem;
+    color: var(--black);
+    font-size: 1.1rem;
+}
+
+.termos__text p, .termos__text ul {
+    line-height: 1.7;
+    color: var(--black-80);
+    margin-top: 0.8rem;
+}
+
+.termos__text ul {
+    padding-left: 1.5rem;
+    list-style: square;
+}
+
+/* Dark Mode */
+[data-theme="dark"] .termos__content {
+    background: var(--bg-header);
+    color: var(--text-color);
+}

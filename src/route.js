@@ -46,6 +46,70 @@ route.get('/pass-incorrect', (req, res) =>
   })
 )
 
+route.get('/politica', (req, res) => {
+    res.render('index', {
+        page: 'politica',
+        title: 'Política de Privacidade',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
+route.get('/quem-somos', (req, res) => {
+    res.render('index', {
+        page: 'quem-somos',
+        title: 'Quem Somos Nós',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
+route.get('/fidelidade', (req, res) => {
+    res.render('index', {
+        page: 'fidelidade',
+        title: 'Programa Fidelidade',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
+route.get('/lojas', (req, res) => {
+    res.render('index', {
+        page: 'lojas',
+        title: 'Nossas Lojas',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
+route.get('/franqueado', (req, res) => {
+    res.render('index', {
+        page: 'franqueado',
+        title: 'Seja um Franqueado',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
+route.get('/anuncie', (req, res) => {
+    res.render('index', {
+        page: 'anuncie',
+        title: 'Anuncie Conosco',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
+route.get('/termos', (req, res) => {
+    res.render('index', {
+        page: 'termos',
+        title: 'Termos e Garantia',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
+route.get('/faq', (req, res) => {
+    res.render('index', {
+        page: 'faq',
+        title: 'Dúvidas Frequentes',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    })
+})
+
 // route.get('/resultado&q=:search', ProductController.view)
 route.post('/search', ProductController.view)
 
@@ -60,3 +124,14 @@ route.post('/produto&id:code', ProductController.save) // open page of recently 
 
 // exporting the routes
 module.exports = route
+
+// No final do seu arquivo route.js
+route.use((req, res) => {
+    res.status(404).render('index', {
+        page: '404',
+        title: 'Página Não Encontrada',
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    });
+});
+
+module.exports = route;

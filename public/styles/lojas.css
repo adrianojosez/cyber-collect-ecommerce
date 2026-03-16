@@ -1,0 +1,82 @@
+.lojas {
+    padding: 3rem 1rem;
+    min-height: 70vh;
+}
+
+.lojas__content {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.lojas__title {
+    color: var(--blue);
+    font-family: var(--press-start);
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.lojas__subtitle {
+    text-align: center;
+    color: var(--black-50);
+    margin-bottom: 3rem;
+}
+
+.lojas__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.lojas__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background: var(--black-5);
+    border-radius: 0.5rem;
+    border-left: 5px solid var(--blue);
+    transition: transform 0.3s;
+}
+
+.lojas__card:hover {
+    transform: scale(1.02);
+}
+
+.lojas__info h3 {
+    color: var(--black);
+    margin-bottom: 1rem;
+}
+
+.lojas__info p {
+    font-size: 0.9rem;
+    color: var(--black-80);
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+}
+
+.lojas__footer-link {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* Modo Escuro */
+[data-theme="dark"] .lojas__content {
+    background: var(--bg-header);
+}
+
+[data-theme="dark"] .lojas__card {
+    background: #252525;
+}
+
+[data-theme="dark"] .lojas__info h3 {
+    color: var(--white);
+}
+
+[data-theme="dark"] .lojas__info p {
+    color: var(--black-30);
+}

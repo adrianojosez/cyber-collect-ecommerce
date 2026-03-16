@@ -1,0 +1,81 @@
+.fidelidade {
+    padding: 3rem 1rem;
+    min-height: 70vh;
+}
+
+.fidelidade__content {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.fidelidade__title {
+    color: var(--blue);
+    font-family: var(--press-start);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.fidelidade__subtitle {
+    color: var(--black-50);
+    margin-bottom: 3rem;
+}
+
+.fidelidade__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.fidelidade__card {
+    padding: 2rem;
+    border: 1px solid var(--blue-20);
+    border-radius: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.fidelidade__card:hover {
+    transform: translateY(-5px);
+    border-color: var(--blue);
+}
+
+.fidelidade__card h3 {
+    margin: 1rem 0;
+    color: var(--blue);
+}
+
+.fidelidade__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.fidelidade__table th, .fidelidade__table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--black-5);
+}
+
+.fidelidade__table th {
+    background: var(--blue-10);
+    color: var(--blue);
+}
+
+/* Dark Mode */
+[data-theme="dark"] .fidelidade__content {
+    background: var(--bg-header);
+}
+
+[data-theme="dark"] .fidelidade__card {
+    border-color: var(--black-80);
+}
+
+[data-theme="dark"] .fidelidade__table th {
+    background: var(--black-80);
+    color: var(--white);
+}

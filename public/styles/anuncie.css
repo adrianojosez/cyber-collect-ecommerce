@@ -1,0 +1,66 @@
+.anuncie {
+    padding: 3rem 1rem;
+    min-height: 70vh;
+}
+
+.anuncie__content {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.anuncie__title {
+    color: var(--blue);
+    font-family: var(--press-start);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.anuncie__metrics {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+}
+
+.metric__card {
+    background: var(--blue-10);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    min-width: 150px;
+}
+
+.metric__card h3 {
+    color: var(--blue);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.options__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.option__item {
+    padding: 1.5rem;
+    border: 1px dashed var(--blue);
+    border-radius: 0.5rem;
+}
+
+.anuncie__contact {
+    margin-top: 3rem;
+    padding: 2rem;
+    border-top: 1px solid var(--black-5);
+}
+
+/* Dark Mode */
+[data-theme="dark"] .anuncie__content { background: var(--bg-header); }
+[data-theme="dark"] .metric__card { background: #252525; }
+[data-theme="dark"] .option__item { border-color: var(--black-50); }

@@ -252,10 +252,10 @@ html {
 }
 
 /* Melhora o visual do foco para quem navega via teclado */
-:focus {
+/* :focus {
     outline: 3px solid rgba(42, 122, 228, 0.5);
     outline-offset: 2px;
-}
+} */
 
 main {
     animation: fadeIn 0.8s ease-in-out;
@@ -300,6 +300,7 @@ body {
     background-color: var(--bg-body);
     color: var(--text-color);
     transition: background 0.3s, color 0.3s; /* Transição suave */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .header {

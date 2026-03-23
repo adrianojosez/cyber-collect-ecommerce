@@ -1,0 +1,78 @@
+/* Estilos para a Seção de Cadastro */
+.cadastro.container {
+    padding-top: 4.75rem;
+    padding-bottom: 4.75rem;
+}
+
+.cadastro__form {
+    display: flex;
+    justify-content: center;
+}
+
+.cadastro__form fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cadastro__form legend {
+    margin: 0 auto 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--black); /* Usando suas variáveis globais */
+}
+
+.cadastro__form input {
+    display: block;
+    width: 20rem; /* Um pouco mais largo que o login para caber nomes longos */
+    padding: 0.75rem;
+    margin: 0 auto 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Estilo de Erro (Seguindo o padrão que você já tem no login) */
+.cadastro__form input.error {
+    border: 1px solid var(--red);
+    margin-bottom: 0.5rem;
+}
+
+.cadastro__form input.error + span {
+    display: flex;
+    color: var(--red);
+    font-weight: 700;
+    font-size: 0.875rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+/* Botão de Cadastro */
+.cadastro__form .button {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.75rem 3rem;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.cadastro__form .button:hover {
+    filter: brightness(1.1);
+}
+
+/* Link para voltar ao Login */
+.cadastro__login-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+}
+
+.cadastro__login-link a {
+    color: var(--blue);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cadastro__login-link a:hover {
+    text-decoration: underline;
+}

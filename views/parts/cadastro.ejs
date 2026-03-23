@@ -1,0 +1,58 @@
+<section class="cadastro container"> <form action="/cadastrar-usuario" method="POST" class="cadastro__form">
+    <fieldset>
+      <legend>Criar Conta</legend>
+      
+      <label for="name" class="sr-only">Nome Completo</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Nome Completo"
+        data-type="name"
+        minlength="3"
+        required
+      />
+      <span role="alert"></span>
+
+      <label for="email" class="sr-only">E-mail</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Seu melhor e-mail"
+        data-type="email"
+        required
+      />
+      <span role="alert"></span>
+
+      <label for="pass" class="sr-only">Crie sua senha</label>
+      <input
+        type="password"
+        name="password"
+        id="pass"
+        placeholder="Crie uma senha"
+        data-type="pass"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[!@#$%^&*_=+-]).{6,12}$"
+        title="A senha deve ter entre 6 e 12 caracteres, incluir uma letra maiúscula, uma minúscula e um número."
+        required
+      />
+      <span role="alert"></span>
+
+      <label for="pass-confirm" class="sr-only">Confirme sua senha</label>
+      <input 
+        type="password" 
+        name="passwordConfirm" 
+        id="pass-confirm" 
+        placeholder="Confirme sua senha" 
+        required 
+      />
+      <span role="alert"></span>
+
+      <button type="submit" class="button__blue button">Cadastrar</button>
+      
+      <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem;">
+        Já tem uma conta? <a href="/login" style="color: var(--blue); font-weight: bold;">Faça Login</a>
+      </p>
+    </fieldset>
+  </form>
+</section>

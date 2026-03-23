@@ -3,6 +3,7 @@ const express = require('express')
 // import ProductController
 const ProductController = require('./controllers/ProductController.js')
 const LoginController = require('./controllers/LoginController')
+const CadastroController = require('./controllers/cadastroController')
 
 // saving all route functionalities that Express has
 const route = express.Router()
@@ -15,6 +16,8 @@ route.get('/produto&id=:code', ProductController.open)
 route.get('/editar&id=:code', ProductController.openEdit)
 
 route.get('/ver&category=:category', ProductController.view)
+
+route.get('/logout', (req, res) => res.redirect('/login'));
 
 route.get('/login', (req, res) =>
   res.render('index', {
@@ -121,6 +124,9 @@ route.post('/produto/:code', ProductController.index) // to open product page
 route.post('/todos-os-produtos', LoginController.enter) // to validate login
 route.post('/admin/:code', ProductController.create) // to create new product id
 route.post('/produto&id:code', ProductController.save) // open page of recently created product
+// Onde você define as rotas de cadastro
+route.get('/cadastro', CadastroController.index)     // Chama a função index
+route.post('/cadastro', CadastroController.cadastrar) // Chama a função cadastrar (ajustado de .save para .cadastrar)
 
 // exporting the routes
 module.exports = route

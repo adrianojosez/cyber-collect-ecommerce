@@ -1,12 +1,33 @@
 // import express
 const express = require('express')
-const port = process.env.PORT || 3000 // the port will be 3000 or whatever the port of the environment
-const route = require('./route') // import the route configured in route.js
+const session = require('express-session') //
+const port = process.env.PORT || 3000 
+const route = require('./route') 
 
 // initiate the application with Express
 const server = express()
-server.set('view engine', 'ejs') // indicates to Node what will be our view engine
-server.use(express.static('public')) // allow express to use static content (styles, images, etc)
-server.use(express.urlencoded({extended: true, limit: '50mb'})) // sets a midware to connect front end and back end
-server.use(route) // indicates that Express must use the route file
+
+server.set('view engine', 'ejs') 
+server.use(express.static('public')) 
+server.use(express.urlencoded({extended: true, limit: '50mb'})) 
+
+// --- CONFIGURAÇÃO DA SESSÃO (DEVE VIR ANTES DAS ROTAS) ---
+server.use(session({
+  secret: 'cybercollect_secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 3600000 } // Sessão dura 1 hora
+}))
+
+// Middleware para o Header (Faz o 'user' aparecer em todas as páginas)
+server.use((req, res, next) => {
+  res.locals.user = req.session.user || undefined
+  next()
+})
+// ---------------------------------------------------------
+
+// AGORA SIM, CHAMA AS ROTAS
+server.use(route) 
+
+// E POR ÚLTIMO O LISTEN (SÓ UMA VEZ)
 server.listen(port, () => console.log(`APP RUNNING ON PORT ${port}`))

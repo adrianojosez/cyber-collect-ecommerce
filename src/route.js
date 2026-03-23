@@ -17,7 +17,15 @@ route.get('/editar&id=:code', ProductController.openEdit)
 
 route.get('/ver&category=:category', ProductController.view)
 
-route.get('/logout', (req, res) => res.redirect('/login'));
+// No seu arquivo route.js
+route.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect('/login'); // Agora ele volta limpo
+  });
+});
 
 route.get('/login', (req, res) =>
   res.render('index', {

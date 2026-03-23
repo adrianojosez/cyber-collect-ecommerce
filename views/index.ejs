@@ -55,13 +55,19 @@
       </div>
       <div class="header__buttons" style="display: flex; gap: 16px; align-items: center;">
 
-        
+ <% if (locals.user && user.name) { %>
+    <span class="user__name">Olá, <strong><%= user.name %></strong></span>
+    <a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Sair</a>
+  <% } else { %>
+    <%- button %> 
+    <a href="/cadastro" class="button__blue button">Cadastrar</a>
+  <% } %>
         
         <button id="theme-toggle" class="button" style="background: none; border: none; cursor: pointer; font-size: 20px;">
         🌙
     </button>
-      <%- button %> 
-      <a href="/cadastro" class="button__blue button">Cadastrar</a>
+      <!-- <%- button %>  -->
+      <!-- <a href="/cadastro" class="button__blue button">Cadastrar</a> -->
       </div>
       <!-- <a class="header__button button__void button" href="login">Login</a> -->
       <i class="header__search icon-search"></i>

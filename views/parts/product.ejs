@@ -9,6 +9,11 @@
     <p><%= product.price %></p>
     <p class="product__description"><%= product.description %></p>
   </div>
+
+  <button onclick="shareProduct('<%= product.name %>', window.location.href)" class="share-btn" style="cursor: pointer; padding: 10px; border: none; background: #2A7AE4; color: white; border-radius: 5px; margin-top: 10px;">
+    <i class="fas fa-share-alt"></i> Compartilhar
+  </button>
+
 </section>
 
 <section class="products container">
@@ -26,3 +31,27 @@
     <% }) %>
   </div>
 </section>
+
+<script>
+  async function shareProduct(title, url) {
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: title,
+                text: `Olha esse colecionável que encontrei na Cyber-Collect: ${title}`,
+                url: url,
+            });
+        } catch (err) {
+            console.log("Erro ao compartilhar:", err);
+        }
+    } else {
+        // Fallback: Copia o link se o navegador não suportar share
+        try {
+            await navigator.clipboard.writeText(url);
+            alert("Link do produto copiado!");
+        } catch (err) {
+            alert("Erro ao copiar link.");
+        }
+    }
+}
+</script>

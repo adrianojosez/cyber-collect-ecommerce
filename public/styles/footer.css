@@ -5,7 +5,7 @@
 
 .footer,
 .footer a {
-  background: var(--white);
+  /* background: var(--white); */
   text-align: center;
   color: var(--black);
   transition: 0.3s;
@@ -14,4 +14,375 @@
 .footer a:hover,
 .footer a:focus {
   color: var(--blue);
+}
+
+/* public/styles/footer.css */
+
+.footer {
+    background-color: #f4f7fe; /* Um tom azulado bem claro para separar do corpo */
+    padding: 4rem 0 2rem;
+    margin-top: 5rem;
+    border-top: 1px solid #dce2ee;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer__column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer__title {
+    font-size: 1.25rem;
+    color: #464646;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.footer__list {
+    list-style: none;
+    padding: 0;
+}
+
+.footer__list li {
+    margin-bottom: 0.75rem;
+}
+
+.footer__list a {
+    color: #464646;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.footer__list a:hover {
+    color: #2A7AE4;
+    text-decoration: underline;
+}
+
+.footer__socials {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icon img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s;
+}
+
+.social-icon img:hover {
+    transform: scale(1.2);
+}
+
+.footer__apps {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.app-btn {
+    width: 160px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.footer__bottom {
+    text-align: center;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #dce2ee;
+}
+
+.footer__bottom p {
+    color: #464646;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* Botão Voltar ao Topo */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2A7AE4;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background 0.3s;
+    z-index: 1000;
+}
+
+.back-to-top:hover {
+    background-color: #1b5cb8;
+}
+
+/* public/styles/footer.css */
+
+.footer {
+    background-color: #f5f5f5; /* Um cinza bem claro para unificar e separar do corpo */
+    padding: 3rem 0 1rem;
+    margin-top: 5rem; /* Espaço para não quebrar o formulário de contato acima */
+    border-top: 1px solid #dce2ee;
+    color: #464646;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer__column {
+    flex: 1;
+    min-width: 200px; /* Garante que as colunas não fiquem espremidas */
+}
+
+.footer__title {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase; /* Estilo Shopee/ML */
+}
+
+/* Lista de Links */
+.footer__list {
+    list-style: none;
+    padding: 0;
+}
+
+.footer__list li {
+    margin-bottom: 0.6rem;
+}
+
+.footer__list a {
+    color: #555;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer__list a:hover {
+    color: #2A7AE4;
+    text-decoration: underline;
+}
+
+/* Área de Pagamento */
+.footer__payments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.footer__payments img {
+    height: 32px; /* Tamanho controlado para não quebrar o layout */
+    width: auto;
+}
+
+/* Redes Sociais com Ícone e Texto */
+.footer__socials {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer__socials a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.footer__socials img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Seção App + QR Code */
+.footer__app-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer__qrcode {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: white;
+}
+
+.footer__app-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.app-btn {
+    height: 35px; /* Controla o tamanho dos botões das lojas */
+    width: auto;
+}
+
+/* Rodapé Final */
+.footer__bottom {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #dce2ee;
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.footer__bottom p {
+    margin-bottom: 5px;
+}
+
+/* Container do Tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* O texto que aparece (escondido por padrão) */
+.tooltip::after {
+    content: attr(data-text); /* Pega o texto do atributo data-text */
+    position: absolute;
+    bottom: 125%; /* Aparece em cima da imagem */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; /* Não atrapalha o clique */
+    z-index: 10;
+}
+
+/* Mostra o texto ao passar o mouse */
+.tooltip:hover::after {
+    opacity: 1;
+}
+
+/* Substitua ou adicione ao seu .tooltip::after */
+.tooltip::after {
+    content: attr(data-text);
+    position: absolute;
+    bottom: 110%; /* Começa um pouco mais baixo */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px); /* Começa deslocado para o efeito */
+    background-color: #2A7AE4; /* Cor azul do seu tema para combinar */
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease; /* Transição mais suave */
+    z-index: 10;
+}
+
+/* Criando a setinha do balão */
+.tooltip::before {
+    content: "";
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #2A7AE4 transparent transparent transparent;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.tooltip:hover::after, 
+.tooltip:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Sobe suavemente */
+}
+
+@media (max-width: 768px) {
+    .footer__container {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .footer__socials, .footer__app-wrapper {
+        justify-content: center;
+    }
+
+    .footer__column {
+        min-width: 100%;
+    }
+}
+
+/* Seção de Benefícios */
+.benefits {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem 0;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.benefit__item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.benefit__item h4 {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.benefit__item p {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Selos de Segurança no Footer */
+.footer__security {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.footer__security img {
+    height: 35px;
+    filter: grayscale(0.5); /* Fica discreto, mas ganha cor no hover */
+    transition: 0.3s;
+}
+
+.footer__security img:hover {
+    filter: grayscale(0);
 }

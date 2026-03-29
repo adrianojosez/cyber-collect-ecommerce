@@ -13,7 +13,8 @@
         required
       />
       <span role="alert"></span>
-      <label for="pass" class="sr-only">Escreva sua senha</label>
+
+      <!-- <label for="pass" class="sr-only">Escreva sua senha</label>
       <input
         type="password"
         name="password"
@@ -24,7 +25,35 @@
         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[!@#$%^&*_=+-]).{6,12}$"
         required
       />
-      <span role="alert"></span>
+      <span role="alert"></span> -->
+
+      <label for="pass" class="sr-only">Escreva sua senha</label>
+<div class="password-wrapper-blindado">
+  <input
+    type="password"
+    name="password"
+    id="pass"
+    placeholder="Escreva sua senha"
+    data-type="pass"
+    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[!@#$%^&*_=+-]).{6,12}$"
+    required
+  />
+  
+  <input type="checkbox" id="toggle-eye" class="toggle-eye-checkbox" />
+  <label for="toggle-eye" class="toggle-eye-label" title="Mostrar/Ocultar Senha"></label>
+</div>
+<span role="alert"></span>
+
+<script>
+  // Script minimalista e robusto: Apenas alterna o tipo baseado no estado do checkbox
+  const checkbox = document.getElementById('toggle-eye');
+  const inputSenha = document.getElementById('pass');
+
+  checkbox.addEventListener('change', function() {
+    inputSenha.type = this.checked ? 'text' : 'password';
+  });
+</script>
+
       <button type="submit" class="button__blue button">Entrar</button>
     </fieldset>
   </form>

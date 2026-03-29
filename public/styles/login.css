@@ -67,3 +67,221 @@
   height: 100px;
   margin: 0 auto;
 }
+
+/* Container da senha */
+.password-wrapper {
+    position: relative;
+    width: 17.1875rem;
+    margin: 0 auto 1rem;
+}
+
+/* Força o input a ocupar o espaço e aceitar o clique do olho */
+.password-wrapper input {
+    width: 100% !important;
+    margin: 0 !important;
+    padding-right: 40px !important;
+}
+
+/* O "Olho" via Pseudo-elemento */
+.password-wrapper::after {
+    content: '👁️'; /* Emoji simples para não depender de ícone externo */
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    z-index: 10;
+    pointer-events: none; /* Deixa o clique passar para o JS abaixo */
+}
+
+/* ______________________ */
+
+/* Container que centraliza e posiciona o ícone */
+.login__form .password-wrapper-blindado {
+  position: relative;
+  width: 17.1875rem; /* Mesma largura fixa que você já usa */
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Força o input a ocupar o espaço e aceitar o clique do olho */
+.login__form .password-wrapper-blindado input {
+  width: 100% !important;
+  margin: 0 !important;
+  padding-right: 2.8rem !important; /* Espaço para o ícone profissional */
+  height: 3rem; /* Ajuste para centralizar o ícone verticalmente */
+  box-sizing: border-box;
+}
+
+/* Esconde o checkbox real que usamos para a lógica */
+.toggle-eye-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* O "Olho Profissional" (SVG Inline) - Invisível ao validador JS */
+.toggle-eye-label {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 10;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  /* Olho ABERTO (Estado Padrão - type="password") */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>');
+}
+
+/* Quando o usuário passa o mouse, o ícone muda para a cor azul do seu projeto */
+.toggle-eye-label:hover {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%232A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>');
+}
+
+/* MUDANÇA DE ESTADO: Quando clicado (checked), troca para o ícone de Olho FECHADO */
+.toggle-eye-checkbox:checked + .toggle-eye-label {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>');
+}
+
+/* Olho FECHADO Azul no hover */
+.toggle-eye-checkbox:checked + .toggle-eye-label:hover {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%232A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>');
+}
+
+/* O "Olho Profissional" - Ajustado para não bloquear o clique no input */
+.toggle-eye-label {
+  position: absolute;
+  right: 12px; /* Mantém no canto direito */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px; /* Largura pequena apenas para o ícone */
+  height: 25px;
+  cursor: pointer;
+  z-index: 10;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  /* Olho ABERTO */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>');
+}
+
+/* Garante que o container não bloqueie nada */
+.login__form .password-wrapper-blindado {
+  position: relative;
+  width: 17.1875rem;
+  margin: 0 auto 1rem;
+  display: block; /* Mudamos para block para evitar comportamento estranho do flex */
+}
+
+/* O input precisa ignorar que o label existe na hora de focar, 
+   mas o label precisa ser clicável. O segredo é o padding. */
+.login__form .password-wrapper-blindado input {
+  display: block;
+  width: 100% !important;
+  padding-right: 40px !important; /* Abre espaço para o ícone no final */
+}
+
+/* --- BLOCO FINAL CONSOLIDADO (COPIE A PARTIR DAQUI) --- */
+
+/* 1. Padronização Geral: Garante que EMAIL e SENHA sejam iguais */
+.login__form input {
+  height: 3.5rem; /* Define uma altura padrão para todos */
+  box-sizing: border-box; /* Impede que o padding deforme o tamanho */
+  padding: 0.75rem;
+}
+
+/* 2. Container da Senha */
+.login__form .password-wrapper-blindado {
+  position: relative;
+  width: 17.1875rem;
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+/* 3. Input de Senha Específico */
+.login__form .password-wrapper-blindado input {
+  width: 100% !important;
+  margin: 0 !important;
+  padding-right: 40px !important; /* Espaço para o ícone */
+  height: 3.5rem !important; /* Força a mesma altura do email */
+}
+
+/* 4. Logística do Ícone (Checkbox e Label) */
+.toggle-eye-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-eye-label {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  z-index: 10;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Ícone Olho Aberto */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>');
+}
+
+.toggle-eye-label:hover {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%232A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>');
+}
+
+/* Troca para Olho Fechado quando clicado */
+.toggle-eye-checkbox:checked + .toggle-eye-label {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>');
+}
+
+.toggle-eye-checkbox:checked + .toggle-eye-label:hover {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%232A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>');
+}
+
+/* --- FIX FINAL DE TAMANHO --- */
+
+/* Força Email e Senha a serem IDÊNTICOS */
+.login__form input[type="email"],
+.login__form .password-wrapper-blindado {
+  width: 100% !important;
+  max-width: 17.1875rem !important; /* Sua medida padrão */
+  height: 3.5rem !important;
+  margin: 0 auto 1rem !important;
+  display: block !important;
+}
+
+/* Garante que o input de senha preencha o container dele */
+.login__form .password-wrapper-blindado input {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding-right: 40px !important;
+  box-sizing: border-box !important;
+}
+
+/* Ajuste do ícone para ficar centralizado na nova altura */
+.toggle-eye-label {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  z-index: 10;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>');
+}
+

@@ -274,5 +274,45 @@
         <i class="icon-arrow-up">↑</i> 
     </a>
 
+<div class="wa-widget-container">
+    <div class="wa-modal" id="waModal">
+        <div class="wa-modal-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
+            <span style="color: white;">Cyber-Collect Suporte</span>
+            <button onclick="toggleWaModal()" class="wa-close">&times;</button>
+        </div>
+        <div class="wa-modal-body">
+            <p>Olá! Como podemos ajudar você hoje?</p>
+            <textarea id="waUserMsg" placeholder="Digite sua dúvida aqui..."></textarea>
+            <button onclick="sendToWhatsapp()" class="wa-send-btn">Iniciar conversa</button>
+        </div>
+    </div>
+
+    <button class="wa-floating-button" onclick="toggleWaModal()" title="Fale conosco">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="wa-icon-anim">
+    </button>
+</div>
+
+<script>
+  function toggleWaModal() {
+    const modal = document.getElementById('waModal');
+    modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+}
+
+function sendToWhatsapp() {
+    const phone = "5513981242306"; // COLOQUE SEU NÚMERO AQUI (DDD + Numero)
+    const msg = document.getElementById('waUserMsg').value;
+    
+    if (msg.trim() === "") {
+        alert("Por favor, digite uma mensagem.");
+        return;
+    }
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+}
+</script>
+
   </body>
+
 </html>

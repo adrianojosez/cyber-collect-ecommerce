@@ -308,3 +308,110 @@ body {
 }
 
 /* Ajuste outros componentes conforme necessário usando var(--text-color) */
+
+/* WHATSAPP BOTAO FIXO CSS DELE */
+
+/* Container do Widget */
+.wa-widget-container {
+    position: fixed;
+    bottom: 90px; /* Posicionado acima do botão 'voltar ao topo' */
+    right: 20px;
+    z-index: 9999;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Botão Flutuante Limpo */
+.wa-floating-button {
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.wa-floating-button:hover { transform: scale(1.1); }
+
+/* Animação apenas no ícone do WhatsApp */
+.wa-icon-anim {
+    width: 35px;
+    animation: wa-bounce 2s infinite;
+}
+
+@keyframes wa-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Modal de Conversa */
+.wa-modal {
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    bottom: 75px;
+    right: 0;
+    width: 300px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+}
+
+.wa-modal-header {
+    background: #075e54;
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.wa-modal-header img { width: 25px; }
+
+.wa-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.wa-modal-body { padding: 15px; }
+
+.wa-modal-body p { font-size: 14px; color: #444; margin-bottom: 10px; }
+
+.wa-modal-body textarea {
+    width: 100%;
+    height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: 13px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.wa-send-btn {
+    width: 100%;
+    background: #25d366;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

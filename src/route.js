@@ -4,6 +4,7 @@ const express = require('express')
 const ProductController = require('./controllers/ProductController.js')
 const LoginController = require('./controllers/LoginController')
 const CadastroController = require('./controllers/cadastroController')
+const DashboardController = require('./controllers/DashboardController')
 
 // saving all route functionalities that Express has
 const route = express.Router()
@@ -35,7 +36,20 @@ route.get('/login', (req, res) =>
   })
 )
 
-route.get('/todos-os-produtos', ProductController.viewAll)
+// Rota de visualização de todos os produtos (Protegida)
+route.get('/todos-os-produtos', (req, res, next) => {
+    if (req.session.user && req.session.user.tipo === 'admin') {
+        return next();
+    }
+    res.redirect('/login');
+}, ProductController.viewAll);
+
+route.get('/admin/dashboard', (req, res, next) => {
+    if (req.session.user && req.session.user.tipo === 'admin') {
+        return next();
+    }
+    res.redirect('/login');
+}, DashboardController.index);
 
 route.get('/admin/:code', LoginController.open)
 

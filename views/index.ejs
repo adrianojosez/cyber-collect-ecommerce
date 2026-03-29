@@ -55,13 +55,20 @@
       </div>
       <div class="header__buttons" style="display: flex; gap: 16px; align-items: center;">
 
- <% if (locals.user && user.name) { %>
+<% if (locals.user && user.name) { %>
     <span class="user__name">Olá, <strong><%= user.name %></strong></span>
+    
+    <% if (user.tipo === 'admin') { %>
+        <a href="/admin/dashboard" class="button" style="background-color: #2A7AE4; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Painel de Controle</a>
+        
+        <a href="/todos-os-produtos" class="button" style="background-color: #555; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Gerenciar Produtos</a>
+    <% } %>
+
     <a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Sair</a>
-  <% } else { %>
+<% } else { %>
     <%- button %> 
     <a href="/cadastro" class="button__blue button">Cadastrar</a>
-  <% } %>
+<% } %>
         
         <button id="theme-toggle" class="button" style="background: none; border: none; cursor: pointer; font-size: 20px;">
         🌙

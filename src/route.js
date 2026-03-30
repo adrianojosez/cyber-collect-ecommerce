@@ -145,15 +145,18 @@ route.get('/esqueci-senha', (req, res) => res.render('index', {
 route.post('/recuperar-senha', LoginController.recuperarSenha);
 
 // Exibe o formulário de nova senha
-route.get('/redefinir-senha', (req, res) => {
-    const email = req.query.email; // Pega o email que veio no link
-    res.render('index', {
-        page: 'redefinir-senha',
-        title: 'Nova Senha',
-        email: email, // Passamos o email para o formulário saber quem atualizar
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    });
-});
+// route.get('/redefinir-senha', (req, res) => {
+//     const email = req.query.email; // Pega o email que veio no link
+//     res.render('index', {
+//         page: 'redefinir-senha',
+//         title: 'Nova Senha',
+//         email: email, // Passamos o email para o formulário saber quem atualizar
+//         button: '<a class="header__button button__void button" href="/login">Login</a>'
+//     });
+// });
+
+// Exibe o formulário de nova senha (Agora via Controller para segurança)
+route.get('/redefinir-senha', LoginController.abrirRedefinirSenha);
 
 // Executa a troca da senha no banco
 route.post('/atualizar-senha', LoginController.atualizarSenha);

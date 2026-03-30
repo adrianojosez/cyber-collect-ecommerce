@@ -6,6 +6,6 @@ const {open} = require('sqlite')
 
 module.exports = () =>
   open({
-    filename: './src/db/alurageek.sqlite',
+    filename: './src/db/cybercollect.sqlite',
     driver: sqlite3.Database
   })

@@ -1,0 +1,17 @@
+<section class="login container">
+  <form action="/atualizar-senha" method="POST" class="login__form">
+    <fieldset>
+      <legend>Criar Nova Senha</legend>
+      
+      <input type="hidden" name="email" value="<%= email %>">
+
+      <label for="pass" class="sr-only">Nova Senha</label>
+      <input type="password" name="password" id="pass" placeholder="Digite a nova senha" required />
+
+      <label for="pass-confirm" class="sr-only">Confirme a Senha</label>
+      <input type="password" name="passwordConfirm" id="pass-confirm" placeholder="Confirme a nova senha" required />
+
+      <button type="submit" class="button__blue button">Alterar Senha</button>
+    </fieldset>
+  </form>
+</section>

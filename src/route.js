@@ -135,6 +135,29 @@ route.get('/faq', (req, res) => {
     })
 })
 
+// Rotas de Esqueci a Senha
+route.get('/esqueci-senha', (req, res) => res.render('index', {
+    page: 'esqueci-senha',
+    title: 'Recuperar Senha',
+    button: '<a class="header__button button__void button" href="/login">Login</a>'
+}));
+
+route.post('/recuperar-senha', LoginController.recuperarSenha);
+
+// Exibe o formulário de nova senha
+route.get('/redefinir-senha', (req, res) => {
+    const email = req.query.email; // Pega o email que veio no link
+    res.render('index', {
+        page: 'redefinir-senha',
+        title: 'Nova Senha',
+        email: email, // Passamos o email para o formulário saber quem atualizar
+        button: '<a class="header__button button__void button" href="/login">Login</a>'
+    });
+});
+
+// Executa a troca da senha no banco
+route.post('/atualizar-senha', LoginController.atualizarSenha);
+
 // route.get('/resultado&q=:search', ProductController.view)
 route.post('/search', ProductController.view)
 
@@ -162,4 +185,4 @@ route.use((req, res) => {
     });
 });
 
-module.exports = route;
+// module.exports = route;

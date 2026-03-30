@@ -1,0 +1,27 @@
+<section class="login container">
+  <form action="/recuperar-senha" method="POST" class="login__form">
+    <fieldset>
+      <legend>Recuperar Senha</legend>
+      <p style="text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--black);">
+        Digite seu e-mail para receber um link de redefinição.
+      </p>
+
+      <label for="email" class="sr-only">E-mail</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Digite seu e-mail cadastrado"
+        data-type="email"
+        required
+      />
+      <span role="alert"></span>
+
+      <button type="submit" class="button__blue button">Enviar Link</button>
+      
+      <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem;">
+        Lembrou a senha? <a href="/login" style="color: var(--blue); font-weight: bold;">Voltar para o Login</a>
+      </p>
+    </fieldset>
+  </form>
+</section>

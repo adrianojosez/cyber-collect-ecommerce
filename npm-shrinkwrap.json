@@ -12,6 +12,7 @@
         "ejs": "^3.1.6",
         "express": "^4.17.3",
         "express-session": "^1.19.0",
+        "nodemailer": "^8.0.4",
         "sqlite": "^4.0.25",
         "sqlite3": "^5.0.2"
       }
@@ -983,6 +984,15 @@
       },
       "engines": {
         "node": ">=4.5"
+      }
+    },
+    "node_modules/nodemailer": {
+      "version": "8.0.4",
+      "resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-8.0.4.tgz",
+      "integrity": "sha512-k+jf6N8PfQJ0Fe8ZhJlgqU5qJU44Lpvp2yvidH3vp1lPnVQMgi4yEEMPXg5eJS1gFIJTVq1NHBk7Ia9ARdSBdQ==",
+      "license": "MIT-0",
+      "engines": {
+        "node": ">=6.0.0"
       }
     },
     "node_modules/nopt": {
@@ -2258,6 +2268,11 @@
           }
         }
       }
+    },
+    "nodemailer": {
+      "version": "8.0.4",
+      "resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-8.0.4.tgz",
+      "integrity": "sha512-k+jf6N8PfQJ0Fe8ZhJlgqU5qJU44Lpvp2yvidH3vp1lPnVQMgi4yEEMPXg5eJS1gFIJTVq1NHBk7Ia9ARdSBdQ=="
     },
     "nopt": {
       "version": "3.0.6",

@@ -37,7 +37,7 @@ git clone https://github.com/adrianojosez/tcc.git
 ```
 npm start
 
-> alura-geek@1.0.0 start
+> cyber@1.0.0 start
 > node .
 
 APP RUNNING ON PORT 3000
@@ -84,8 +84,6 @@ _English version_
 ### 🔎 Overview
 
 Hello, devs!
-
-In this repo you will find an e-commerce page (admin version) for a geek store named **Alura Geek**, which was development as a result of a Front-End Challenge (3rd edition) exclusively for students of [Alura](https://www.alura.com.br) tech school.
 
 **Due to limitations from the hoster service, the initial loading of the page may take a few seconds.**
 

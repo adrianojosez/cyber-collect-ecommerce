@@ -1,0 +1,51 @@
+<section class="admin container">
+  <!-- Editar usuário -->
+  <form
+    action="/editar-usuario"
+    method="POST"
+    class="contact__form"
+  >
+    <fieldset>
+      <legend>Editar Usuário</legend>
+
+      <input type="hidden" name="id" value="<%= user.id %>">
+
+      <label for="user__name" class="sr-only">Nome do usuário</label>
+      <input
+        type="text"
+        name="name"
+        id="user__name"
+        placeholder="Nome do usuário"
+        value="<%= user.name %>"
+        required
+      />
+      <span role="alert"></span>
+
+      <label for="user__email" class="sr-only">E-mail do usuário</label>
+      <input
+        type="email"
+        name="email"
+        id="user__email"
+        placeholder="E-mail do usuário"
+        value="<%= user.email %>"
+        required
+      />
+      <span role="alert"></span>
+
+      <label for="user__level" class="sr-only">Nível de Acesso</label>
+      <select
+        name="tipo"
+        id="user__level"
+        required
+      >
+        <option value="cliente" <%= user.tipo === 'cliente' ? 'selected' : '' %>>Cliente</option>
+        <option value="admin" <%= user.tipo === 'admin' ? 'selected' : '' %>>Administrador</option>
+      </select>
+      <span role="alert"></span>
+
+      <button type="submit" class="button__blue button">
+        Salvar Alterações
+      </button>
+    </fieldset>
+  </form>
+</section>

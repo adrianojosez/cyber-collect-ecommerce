@@ -10,7 +10,7 @@ module.exports = {
         const password = req.body.password
 
         const user = await db.get(`
-            SELECT name, email as login, password, 'cliente' as tipo FROM users WHERE email = ? 
+            SELECT name, email as login, password, tipo FROM users WHERE email = ? 
             UNION 
             SELECT 'Administrador' as name, userLogin as login, password, 'admin' as tipo FROM admin WHERE userLogin = ?
         `, [email, email])

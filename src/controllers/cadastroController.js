@@ -21,10 +21,11 @@ module.exports = {
         try {
             const db = await Database();
             
-            await db.run(`INSERT INTO users (name, email, password) VALUES (?, ?, ?)`, [
+            await db.run(`INSERT INTO users (name, email, password, tipo) VALUES (?, ?, ?, ?)`, [
                 name,
                 email,
-                password
+                password,
+                'cliente'
             ]);
 
             await db.close();

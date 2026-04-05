@@ -220,3 +220,419 @@ tbody tr:hover {
         margin: 2px 0;
     }
 }
+
+/* Estilos para a barra de pesquisa */
+.search-container input:focus {
+    border-color: #2A7AE4;
+    box-shadow: 0 0 0 3px rgba(42, 122, 228, 0.1);
+}
+
+/* Estilos para linhas zebradas na tabela de usuários */
+#usersTable .even-row {
+    background-color: #f9f9f9;
+}
+
+#usersTable .odd-row {
+    background-color: #ffffff;
+}
+
+#usersTable tbody tr:hover {
+    background-color: #e8f4fd !important;
+}
+
+/* Melhorar aparência dos links de ação */
+.products-table a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos específicos para a página de usuários */
+.dashboard .search-container {
+    margin-bottom: 2rem;
+}
+
+.dashboard .search-container input {
+    transition: all 0.3s ease;
+}
+
+.dashboard .search-container input:focus {
+    transform: scale(1.02);
+}
+
+/* ===========================================
+   ESTILOS MODERNOS PARA USUÁRIOS
+   =========================================== */
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.dashboard-container h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2A7AE4;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Barra de Pesquisa Moderna */
+.search-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    opacity: 0.7;
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 18px 20px 18px 50px;
+    border: 1px solid #d8dde6;
+    border-radius: 50px;
+    font-size: 1rem;
+    background: #ffffff;
+    transition: all 0.25s ease;
+    outline: none;
+    box-shadow: 0 6px 18px rgba(16, 52, 94, 0.08);
+}
+
+.search-wrapper input:focus {
+    border-color: #2A7AE4;
+    box-shadow: 0 8px 24px rgba(42, 122, 228, 0.18);
+    transform: translateY(-1px);
+}
+
+.search-wrapper input::placeholder {
+    color: #a2a8b9;
+}
+
+/* Cards de Métricas Modernos */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.metric-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.75rem 1.75rem 1.5rem;
+    box-shadow: 0 12px 34px rgba(15, 34, 64, 0.06);
+    border: 1px solid rgba(64, 113, 212, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 44px rgba(15, 34, 64, 0.09);
+}
+
+.metric-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.metric-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.total-users .metric-icon {
+    background: linear-gradient(135deg, #2A7AE4, #4A90E2);
+}
+
+.active-users .metric-icon {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.admin-users .metric-icon {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.total-users .metric-icon svg path {
+    stroke: #fff;
+}
+
+.active-users .metric-icon svg path {
+    stroke: #fff;
+}
+
+.admin-users .metric-icon svg path {
+    stroke: #fff;
+}
+
+.metric-content h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.total-users .metric-content h3 {
+    background: linear-gradient(135deg, #2A7AE4, #4A90E2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.active-users .metric-content h3 {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.admin-users .metric-content h3 {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.metric-content p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Container da Tabela */
+.table-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 14px 50px rgba(15,34,64,0.08);
+    overflow: hidden;
+    border: 1px solid #e8edf3;
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.table-header {
+    padding: 1.75rem 2rem;
+    border-bottom: 1px solid #e8edf3;
+    background: #f8f9fb;
+}
+
+.table-header h4 {
+    margin: 0;
+    color: #2A7AE4;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* Tabela Moderna */
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+.modern-table thead {
+    background: #f2f4f7;
+    color: #5f6d85;
+}
+
+.modern-table th {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    border: none;
+}
+
+.modern-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e8edf3;
+    vertical-align: middle;
+}
+
+.modern-table tbody tr {
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.modern-table tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: translateX(2px);
+}
+
+.modern-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Estilos para células específicas */
+.user-id {
+    font-weight: 600;
+    color: #2A7AE4;
+    font-family: 'Courier New', monospace;
+}
+
+.user-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.user-email {
+    color: #6c757d;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+/* Badges de Nível de Acesso */
+.access-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    box-shadow: 0 4px 18px rgba(15,34,64,0.08);
+}
+
+.client-badge {
+    background: #e8f7ee;
+    color: #1f7a4b;
+}
+
+.admin-badge {
+    background: #f2e7ff;
+    color: #6d3bb5;
+}
+
+/* Botões de Ação */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(15,34,64,0.08);
+}
+
+.edit-btn {
+    background: #2A7AE4;
+}
+
+.edit-btn:hover {
+    background: #2565c4;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(42, 122, 228, 0.25);
+}
+
+.delete-btn {
+    background: #ff4d4d;
+}
+
+.delete-btn:hover {
+    background: #dc3f3f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 77, 77, 0.25);
+}
+
+.action-btn svg {
+    transition: all 0.2s ease;
+    stroke: #ffffff;
+}
+
+.action-btn:hover svg {
+    transform: scale(1.05);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    .dashboard-container h2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .metric-card {
+        padding: 1.5rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .metric-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .metric-content h3 {
+        font-size: 2rem;
+    }
+
+    .modern-table th,
+    .modern-table td {
+        padding: 0.8rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .action-btn {
+        width: 32px;
+        height: 32px;
+    }
+}

@@ -1,0 +1,342 @@
+<section class="dashboard">
+    <div class="dashboard-container">
+        <h2>Gerenciamento de Usuários</h2>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-section">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Buscar por nome ou e-mail..."
+                    onkeyup="filterUsers()"
+                >
+            </div>
+        </div>
+
+        <!-- Cards de Estatísticas -->
+        <div class="metrics-grid">
+            <div class="metric-card total-users">
+                <div class="metric-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 20H7C5.89543 20 5 19.1046 5 18V9C5 7.89543 5.89543 7 7 7H17C18.1046 7 19 7.89543 19 9V18C19 19.1046 18.1046 20 17 20Z" stroke="#2A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 3V7" stroke="#2A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 11H16" stroke="#2A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 15H16" stroke="#2A7AE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <h3><%= stats.total %></h3>
+                    <p>Total de Usuários</p>
+                </div>
+            </div>
+
+            <div class="metric-card active-users">
+                <div class="metric-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#2ecc71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#2ecc71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <h3><%= stats.total %></h3>
+                    <p>Usuários Ativos</p>
+                </div>
+            </div>
+
+            <div class="metric-card admin-users">
+                <div class="metric-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#9b59b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <h3><%= Math.floor(stats.total * 0.1) || 1 %></h3>
+                    <p>Administradores</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela de Usuários -->
+        <div class="table-container">
+            <div class="table-header">
+                <h4>Lista de Usuários</h4>
+            </div>
+            <div class="table-wrapper">
+                <table id="usersTable" class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Nível de Acesso</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% stats.users.forEach((user, index) => { %>
+                            <tr>
+                                <td class="user-id">#<%= user.id %></td>
+                                <td class="user-name"><%= user.name %></td>
+                                <td class="user-email"><%= user.email %></td>
+                                <td>
+                                    <span class="access-badge <%= user.tipo === 'admin' ? 'admin-badge' : 'client-badge' %>">
+                                        <%= user.tipo === 'admin' ? 'Administrador' : 'Cliente' %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="/editar-usuario?id=<%= user.id %>" class="action-btn edit-btn" title="Editar usuário">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </a>
+                                        <a href="/deletar-usuario?id=<%= user.id %>"
+                                           onclick="return confirm('Tem certeza que deseja excluir este usuário?')"
+                                           class="action-btn delete-btn"
+                                           title="Excluir usuário">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function filterUsers() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById('usersTable');
+    const rows = table.getElementsByTagName('tr');
+
+    // Começar do índice 1 para pular o cabeçalho
+    for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+
+        // Verificar nome (índice 1) e email (índice 2)
+        if (cells[1] && cells[2]) {
+            const name = cells[1].textContent || cells[1].innerText;
+            const email = cells[2].textContent || cells[2].innerText;
+
+            if (name.toLowerCase().indexOf(filter) > -1 || email.toLowerCase().indexOf(filter) > -1) {
+                match = true;
+            }
+        }
+
+        rows[i].style.display = match ? '' : 'none';
+    }
+}
+</script>
+
+<style>
+    /* Container Principal */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+}
+
+.dashboard-container h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+/* Seção de Pesquisa Centralizada */
+.search-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 50px;
+    padding: 5px 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.search-wrapper:focus-within {
+    box-shadow: 0 10px 25px rgba(42, 122, 228, 0.15);
+    border-color: #2A7AE4;
+}
+
+.search-wrapper input {
+    border: none;
+    padding: 12px 15px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    background: transparent;
+}
+
+/* Grid de Métricas Moderno */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.metric-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
+    border-bottom: 4px solid #eee;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.metric-card.total-users { border-color: #2A7AE4; }
+.metric-card.active-users { border-color: #2ecc71; }
+.metric-card.admin-users { border-color: #9b59b6; }
+
+.metric-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.total-users .metric-icon { background: rgba(42, 122, 228, 0.1); }
+.active-users .metric-icon { background: rgba(46, 204, 113, 0.1); }
+.admin-users .metric-icon { background: rgba(155, 89, 182, 0.1); }
+
+.metric-content h3 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.metric-content p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Tabela Profissional */
+.table-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.table-header {
+    padding: 20px 25px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.table-header h4 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.modern-table th {
+    background: #f8f9fa;
+    padding: 15px 25px;
+    color: #7f8c8d;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.modern-table td {
+    padding: 18px 25px;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.modern-table tr:last-child td { border-bottom: none; }
+
+.modern-table tr:hover { background-color: #fcfcfc; }
+
+/* Badges de Acesso */
+.access-badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.client-badge {
+    background: #e1f7ec;
+    color: #2ecc71;
+}
+
+.admin-badge {
+    background: #f3e5f5;
+    color: #9b59b6;
+}
+
+/* Botões de Ação */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.edit-btn { background: #2A7AE4; }
+.edit-btn:hover { background: #1c5fb8; box-shadow: 0 4px 10px rgba(42, 122, 228, 0.3); }
+
+.delete-btn { background: #e74c3c; }
+.delete-btn:hover { background: #c0392b; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3); }
+
+.user-id { font-weight: 700; color: #bdc3c7; }
+.user-name { font-weight: 600; }
+</style>

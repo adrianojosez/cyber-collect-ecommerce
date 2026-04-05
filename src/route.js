@@ -5,6 +5,7 @@ const ProductController = require('./controllers/ProductController.js')
 const LoginController = require('./controllers/LoginController')
 const CadastroController = require('./controllers/cadastroController')
 const DashboardController = require('./controllers/DashboardController')
+const UserController = require('./controllers/UserController')
 
 // saving all route functionalities that Express has
 const route = express.Router()
@@ -50,6 +51,34 @@ route.get('/admin/dashboard', (req, res, next) => {
     }
     res.redirect('/login');
 }, DashboardController.index);
+
+route.get('/admin/usuarios', (req, res, next) => {
+    if (req.session.user && req.session.user.tipo === 'admin') {
+        return next();
+    }
+    res.redirect('/login');
+}, UserController.listUsers);
+
+route.get('/editar-usuario', (req, res, next) => {
+    if (req.session.user && req.session.user.tipo === 'admin') {
+        return next();
+    }
+    res.redirect('/login');
+}, UserController.showEditUser);
+
+route.post('/editar-usuario', (req, res, next) => {
+    if (req.session.user && req.session.user.tipo === 'admin') {
+        return next();
+    }
+    res.redirect('/login');
+}, UserController.updateUser);
+
+route.get('/deletar-usuario', (req, res, next) => {
+    if (req.session.user && req.session.user.tipo === 'admin') {
+        return next();
+    }
+    res.redirect('/login');
+}, UserController.deleteUser);
 
 route.get('/admin/:code', LoginController.open)
 

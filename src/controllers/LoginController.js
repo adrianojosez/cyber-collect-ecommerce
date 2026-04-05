@@ -107,11 +107,36 @@ async recuperarSenha(req, res) {
     }
 },
 
-    // Adicione esta função ao seu LoginController.js
-abrirRedefinirSenha(req, res) {
-    const email = req.query.email || ""; 
-    const token = req.query.token || ""; 
-    
+    // Exibe o formulário de redefinição apenas se o token for válido
+async abrirRedefinirSenha(req, res) {
+    const email = req.query.email || "";
+    const token = req.query.token || "";
+
+    if (!email || !token) {
+        return res.render('index', {
+            page: 'link-invalido',
+            title: 'Link Inválido',
+            button: '<a class="header__button button__void button" href="/login">Login</a>'
+        });
+    }
+
+    const db = await Database();
+    const user = await db.get(`
+        SELECT 1 FROM users WHERE email = ? AND password = ?
+        UNION
+        SELECT 1 FROM admin WHERE userLogin = ? AND password = ?
+    `, [email, token, email, token]);
+
+    await db.close();
+
+    if (!user) {
+        return res.render('index', {
+            page: 'link-invalido',
+            title: 'Link Inválido',
+            button: '<a class="header__button button__void button" href="/login">Login</a>'
+        });
+    }
+
     res.render('index', {
         page: 'redefinir-senha',
         title: 'Criar Nova Senha',
@@ -128,7 +153,13 @@ async atualizarSenha(req, res) {
     // 1. Validação de senha igual
     if (password !== passwordConfirm) {
         await db.close();
-        return res.send("As senhas não coincidem!");
+        return res.render('index', {
+            page: 'erro-redefinir',
+            title: 'Erro ao Redefinir Senha',
+            email: email,
+            token: token,
+            button: '<a class="header__button button__void button" href="/login">Login</a>'
+        });
     }
 
     // 2. VERIFICAÇÃO DE SEGURANÇA: O e-mail e o token batem com o banco?
@@ -140,7 +171,11 @@ async atualizarSenha(req, res) {
 
     if (!user) {
         await db.close();
-        return res.send("Este link de recuperação expirou ou é inválido!"); 
+        return res.render('index', {
+            page: 'link-invalido',
+            title: 'Link Inválido',
+            button: '<a class="header__button button__void button" href="/login">Login</a>'
+        });
     }
 
     // 3. Se chegou aqui, é seguro atualizar!

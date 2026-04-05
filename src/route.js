@@ -67,7 +67,16 @@ route.get('/pass-incorrect', (req, res) =>
     page: 'pass-incorrect',
     title: 'Sem Permissão',
     button:
-      '<a class="header__button button__void button" href="login">Login</a>'
+      '<a class="header__button button__void button" href="/login">Login</a>'
+  })
+)
+
+route.get('/link-invalido', (req, res) =>
+  res.render('index', {
+    page: 'link-invalido',
+    title: 'Link Inválido',
+    button:
+      '<a class="header__button button__void button" href="/login">Login</a>'
   })
 )
 

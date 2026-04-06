@@ -25,6 +25,7 @@
     <% if (page === 'cart') { %>
     <link rel="stylesheet" href="/styles/cart.css" />
     <% } %>
+    <link rel="stylesheet" href="/styles/cookie-consent.css" />
   </head>
 
   <body>
@@ -324,6 +325,18 @@ function sendToWhatsapp() {
     window.open(url, '_blank');
 }
 </script>
+
+<!-- Cookie Consent Banner -->
+<div id="cookie-consent" class="cookie-consent">
+  <div class="cookie-consent__content">
+    <p class="cookie-consent__text">
+      Nós utilizamos cookies para melhorar sua experiência e salvar seu carrinho de compras. Ao continuar, você concorda com nossa <a href="/politica" style="color: #2A7AE4; text-decoration: underline;">Política de Privacidade</a>.
+    </p>
+    <button id="cookie-accept" class="cookie-consent__button">Aceitar</button>
+  </div>
+</div>
+
+<script src="/scripts/cookie-consent.js"></script>
 
   </body>
 

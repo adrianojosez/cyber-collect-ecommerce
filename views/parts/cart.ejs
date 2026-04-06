@@ -1,0 +1,141 @@
+<section class="cart container">
+  <div class="cart__header">
+    <h1>Meu Carrinho</h1>
+    <p>Total de itens: <strong><%= cart.length %></strong></p>
+  </div>
+
+  <% if (!cart || cart.length === 0) { %>
+    <div class="cart__empty">
+      <p>Seu carrinho está vazio. Navegue pelos produtos e adicione ao carrinho.</p>
+      <a href="/" class="button button__blue">Continuar Comprando</a>
+    </div>
+  <% } else { %>
+    <div class="cart__content">
+      <div class="cart__items">
+        <!-- Desktop Table -->
+        <div class="cart__table">
+          <table>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Preço Unitário</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% cart.forEach(item => { %>
+                <tr>
+                  <td class="cart__product">
+                    <img src="<%= item.imagem %>" alt="<%= item.nome %>" />
+                    <span><%= item.nome %></span>
+                  </td>
+                  <td class="cart__price"><%= item.precoFormatted %></td>
+                  <td class="cart__quantity">
+                    <form action="/cart/update-quantity" method="POST" class="quantity-form">
+                      <input type="hidden" name="id" value="<%= item.id %>" />
+                      <div class="quantity-controls">
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
+                        <input
+                          type="number"
+                          name="quantity"
+                          value="<%= item.quantidade %>"
+                          min="1"
+                          class="quantity-input"
+                        />
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
+                        <button type="submit" class="quantity-update">Atualizar</button>
+                      </div>
+                    </form>
+                  </td>
+                  <td class="cart__subtotal"><%= item.subtotalFormatted %></td>
+                  <td class="cart__actions">
+                    <form action="/cart/remove/<%= item.id %>" method="POST">
+                      <button type="submit" class="remove-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+                        </svg>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="cart__cards">
+          <% cart.forEach(item => { %>
+            <div class="cart__card">
+              <div class="cart__card-image">
+                <img src="<%= item.imagem %>" alt="<%= item.nome %>" />
+              </div>
+              <div class="cart__card-content">
+                <h3><%= item.nome %></h3>
+                <p class="cart__card-price"><%= item.precoFormatted %></p>
+                <div class="cart__card-quantity">
+                  <form action="/cart/update-quantity" method="POST" class="quantity-form">
+                    <input type="hidden" name="id" value="<%= item.id %>" />
+                    <div class="quantity-controls">
+                      <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
+                      <input
+                        type="number"
+                        name="quantity"
+                        value="<%= item.quantidade %>"
+                        min="1"
+                        class="quantity-input"
+                      />
+                      <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
+                      <button type="submit" class="quantity-update">Atualizar</button>
+                    </div>
+                  </form>
+                </div>
+                <p class="cart__card-subtotal">Subtotal: <%= item.subtotalFormatted %></p>
+                <form action="/cart/remove/<%= item.id %>" method="POST" class="cart__card-remove">
+                  <button type="submit" class="remove-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+                    </svg>
+                    Remover
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="cart__summary">
+        <h2>Resumo do Pedido</h2>
+        <div class="summary__item">
+          <span>Total de Itens:</span>
+          <span><%= cart.length %></span>
+        </div>
+        <div class="summary__item">
+          <span>Frete:</span>
+          <span>Grátis</span>
+        </div>
+        <div class="summary__total">
+          <span>Valor Total:</span>
+          <span><%= totalFormatted %></span>
+        </div>
+        <div class="cart__actions">
+          <a href="/" class="button button__outline">Continuar Comprando</a>
+          <a href="/checkout" class="button button__primary">Finalizar Compra</a>
+        </div>
+      </div>
+    </div>
+  <% } %>
+</section>
+
+<script>
+  function changeQuantity(btn, delta) {
+    const input = btn.parentElement.querySelector('.quantity-input');
+    const currentValue = parseInt(input.value);
+    const newValue = Math.max(1, currentValue + delta);
+    input.value = newValue;
+  }
+</script>
+

@@ -2,6 +2,7 @@
 const express = require('express')
 // import ProductController
 const ProductController = require('./controllers/ProductController.js')
+const CartController = require('./controllers/CartController')
 const LoginController = require('./controllers/LoginController')
 const CadastroController = require('./controllers/cadastroController')
 const DashboardController = require('./controllers/DashboardController')
@@ -18,6 +19,16 @@ route.get('/produto&id=:code', ProductController.open)
 route.get('/editar&id=:code', ProductController.openEdit)
 
 route.get('/ver&category=:category', ProductController.view)
+
+route.get('/cart', CartController.view)
+route.post('/cart/add/:id', CartController.add)
+route.post('/cart/remove/:id', CartController.remove)
+route.post('/cart/update-quantity', CartController.updateQuantity)
+
+// Placeholder para checkout
+route.get('/checkout', (req, res) => {
+  res.send('Página de checkout em desenvolvimento. <a href="/cart">Voltar ao carrinho</a>')
+})
 
 // No seu arquivo route.js
 route.get('/logout', (req, res) => {

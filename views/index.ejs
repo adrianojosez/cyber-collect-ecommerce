@@ -22,6 +22,9 @@
     <% if (page === 'dashboard') { %>
     <link rel="stylesheet" href="/styles/dashboard.css" />
     <% } %>
+    <% if (page === 'cart') { %>
+    <link rel="stylesheet" href="/styles/cart.css" />
+    <% } %>
   </head>
 
   <body>
@@ -74,6 +77,10 @@
     <%- button %> 
     <a href="/cadastro" class="button__blue button">Cadastrar</a>
 <% } %>
+
+    <a href="/cart" class="button" style="background-color: #2A7AE4; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">
+      Carrinho (<%= cartItemCount || 0 %>)
+    </a>
         
         <button id="theme-toggle" class="button" style="background: none; border: none; cursor: pointer; font-size: 20px;">
         🌙

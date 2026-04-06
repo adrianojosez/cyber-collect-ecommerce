@@ -5,13 +5,23 @@ const initDb = {
     // Receives database info
     const db = await Database()
 
-    // Create tables inside database sqlite file
-    await db.exec(`CREATE TABLE admin (
+    // Enable foreign key constraints in SQLite
+    await db.exec('PRAGMA foreign_keys = ON')
+
+    await db.exec(`CREATE TABLE IF NOT EXISTS admin (
       userLogin TEXT,
       password TEXT
     )`)
 
-    await db.exec(`CREATE TABLE products (
+    await db.exec(`CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      email TEXT UNIQUE,
+      password TEXT,
+      tipo TEXT
+    )`)
+
+    await db.exec(`CREATE TABLE IF NOT EXISTS products (
       id INTEGER,
       image TEXT,
       name TEXT,
@@ -21,7 +31,17 @@ const initDb = {
       altText TEXT
     )`)
 
-    await db.run(`INSERT INTO admin (
+    await db.exec(`CREATE TABLE IF NOT EXISTS cart_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      product_id INTEGER,
+      quantity INTEGER,
+      FOREIGN KEY(user_id) REFERENCES users(id),
+      FOREIGN KEY(product_id) REFERENCES products(id),
+      UNIQUE(user_id, product_id)
+    )`)
+
+    await db.run(`INSERT OR IGNORE INTO admin (
       userLogin,
       password
     ) VALUES (

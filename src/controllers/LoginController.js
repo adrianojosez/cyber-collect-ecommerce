@@ -10,26 +10,78 @@ module.exports = {
         const password = req.body.password
 
         const user = await db.get(`
-            SELECT name, email as login, password, tipo FROM users WHERE email = ? 
+            SELECT id, name, email as login, password, tipo FROM users WHERE email = ? 
             UNION 
-            SELECT 'Administrador' as name, userLogin as login, password, 'admin' as tipo FROM admin WHERE userLogin = ?
+            SELECT null as id, 'Administrador' as name, userLogin as login, password, 'admin' as tipo FROM admin WHERE userLogin = ?
         `, [email, email])
 
-        await db.close()
-
         if (!user || user.password !== password) {
+            await db.close()
             return res.redirect('/login-error')
         }
 
         req.session.user = {
+            id: user.id || null,
             name: user.name,
             tipo: user.tipo
         }
 
+        if (user.tipo !== 'admin' && user.id) {
+            const guestCart = req.session.cart || []
+
+            const persistedItems = await db.all(
+                `SELECT ci.product_id AS id, ci.quantity, p.name, p.price, p.image
+                 FROM cart_items ci
+                 JOIN products p ON p.id = ci.product_id
+                 WHERE ci.user_id = ?`,
+                [user.id]
+            )
+
+            for (const item of guestCart) {
+                const existingItem = persistedItems.find(
+                    persisted => String(persisted.id) === String(item.id)
+                )
+
+                if (existingItem) {
+                    await db.run(
+                        `UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?`,
+                        [existingItem.quantity + item.quantidade, user.id, item.id]
+                    )
+                } else {
+                    await db.run(
+                        `INSERT OR IGNORE INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)`,
+                        [user.id, item.id, item.quantidade]
+                    )
+                }
+            }
+
+            const updatedItems = await db.all(
+                `SELECT ci.product_id AS id, ci.quantity, p.name, p.price, p.image
+                 FROM cart_items ci
+                 JOIN products p ON p.id = ci.product_id
+                 WHERE ci.user_id = ?`,
+                [user.id]
+            )
+
+            req.session.cart = updatedItems.map(product => ({
+                id: product.id,
+                nome: product.name,
+                preco: product.price,
+                imagem: product.image,
+                quantidade: product.quantity
+            }))
+        }
+
+        await db.close()
+
         if (user.tipo === 'admin') {
+            req.session.cart = []
             return res.redirect('/todos-os-produtos')
         } else {
-            return res.redirect('/') 
+            if (!req.session.cart) {
+                req.session.cart = []
+            }
+            return res.redirect('/')
         }
     },
 

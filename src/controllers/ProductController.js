@@ -66,7 +66,26 @@ module.exports = {
 
     res.render('index', {
       page: 'product',
-      title: 'Produto',
+      title: product.name,
+      description: product.description,
+      keywords: `${product.name}, ${product.category}, action figures, colecionáveis, geek`,
+      ogTitle: product.name,
+      ogDescription: product.description,
+      ogImage: product.image,
+      canonical: `https://seusite.com/produto&id=${productId}`,
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product.name,
+        "description": product.description,
+        "image": product.image,
+        "offers": {
+          "@type": "Offer",
+          "price": product.price.replace('R$', '').replace(',', '.').trim(),
+          "priceCurrency": "BRL",
+          "availability": "https://schema.org/InStock"
+        }
+      },
       button:
         '<a class="header__button button__void button" href="/login">Login</a>',
       product: product,
@@ -131,6 +150,13 @@ module.exports = {
     res.render('index', {
       page: 'main',
       title: 'Home',
+      description: 'Cyber-Collect: Loja especializada em hardware, action figures e colecionáveis geek. Encontre os melhores produtos para gamers e colecionadores.',
+      keywords: 'hardware, action figures, colecionáveis, geek, star wars, videogames, informática',
+      ogTitle: 'Cyber-Collect - Hardware e Colecionáveis Geek',
+      ogDescription: 'Loja especializada em hardware, action figures e colecionáveis geek. Encontre os melhores produtos para gamers e colecionadores.',
+      ogImage: '/images/logo.svg',
+      canonical: 'https://seusite.com/',
+      jsonLd: null,
       button:
         '<a class="header__button button__void button" href="login">Login</a>',
       starWars: starWars,

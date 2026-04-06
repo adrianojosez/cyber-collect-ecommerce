@@ -38,6 +38,15 @@ server.use((req, res, next) => {
     0
   )
 
+  // SEO defaults
+  res.locals.jsonLd = null
+  res.locals.description = 'Cyber-Collect: Sistema de e-commerce especializado em hardware e colecionáveis.'
+  res.locals.keywords = 'action figures, colecionáveis, geek, hardware, informática'
+  res.locals.ogTitle = 'Loja Informática'
+  res.locals.ogDescription = 'Cyber-Collect: Sistema de e-commerce especializado em hardware e colecionáveis.'
+  res.locals.ogImage = '/images/logo.svg'
+  res.locals.canonical = 'https://seusite.com'
+
   next()
 })
 // ---------------------------------------------------------

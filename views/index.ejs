@@ -4,12 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:image" content="/images/logo.svg" />
+    <meta name="description" content="<%- locals.description %>" />
+    <meta name="keywords" content="<%- locals.keywords %>" />
     <meta name="author" content="Adriano José" />
-    <meta 
-      name="description" 
-      content="Cyber-Collect: Sistema de e-commerce especializado em hardware e colecionáveis, desenvolvido para o TCC de ADS - FATEC Baixada Santista." 
-    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<%- locals.ogTitle %>" />
+    <meta property="og:description" content="<%- locals.ogDescription %>" />
+    <meta property="og:image" content="<%- locals.ogImage %>" />
+    <meta property="og:url" content="<%- locals.canonical %>" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<%- locals.ogTitle %>" />
+    <meta name="twitter:description" content="<%- locals.ogDescription %>" />
+    <meta name="twitter:image" content="<%- locals.ogImage %>" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<%- locals.canonical %>" />
+
     <link rel="icon" href="/images/fav.svg" type="image/icon type" />
     <title>Loja Informática | <%- title %></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,6 +41,11 @@
     <link rel="stylesheet" href="/styles/cart.css" />
     <% } %>
     <link rel="stylesheet" href="/styles/cookie-consent.css" />
+    <% if (locals.jsonLd) { %>
+    <script type="application/ld+json">
+      <%- JSON.stringify(locals.jsonLd) %>
+    </script>
+    <% } %>
   </head>
 
   <body>

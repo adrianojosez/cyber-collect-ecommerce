@@ -153,7 +153,14 @@ module.exports = {
 
     return res.render('index', {
       page: 'cart',
-      title: 'Carrinho',
+      title: 'Carrinho de Compras',
+      description: 'Veja e gerencie os itens no seu carrinho de compras da Cyber-Collect.',
+      keywords: 'carrinho, compras, cyber-collect, produtos',
+      ogTitle: 'Carrinho de Compras - Cyber-Collect',
+      ogDescription: 'Veja e gerencie os itens no seu carrinho de compras.',
+      ogImage: '/images/logo.svg',
+      canonical: 'https://seusite.com/cart',
+      jsonLd: null,
       button: '<a class="header__button button__void button" href="/login">Login</a>',
       cart: cartWithSubtotals,
       total: total,

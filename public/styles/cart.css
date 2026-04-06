@@ -35,6 +35,23 @@
   color: #666;
 }
 
+.cart__empty-icon {
+  margin-bottom: 1.5rem;
+}
+
+.cart__empty-icon .fa-shopping-basket {
+  color: #ccc;
+}
+
+.cart__empty .button {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.cart__empty .button:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
 .cart__content {
   display: grid;
   grid-template-columns: 1fr 300px;

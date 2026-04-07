@@ -11,13 +11,21 @@ const UserController = require('./controllers/UserController')
 // saving all route functionalities that Express has
 const route = express.Router()
 
+const requireAdmin = (req, res, next) => {
+  if (req.session.user && req.session.user.tipo === 'admin') {
+    return next()
+  }
+  return res.redirect('/login')
+}
+
 // defining get routes
 route.get('/', ProductController.show)
 
+route.get('/search', ProductController.view)
+route.get('/ver', ProductController.view)
+route.get('/produto/:code', ProductController.open)
 route.get('/produto&id=:code', ProductController.open)
-
 route.get('/editar&id=:code', ProductController.openEdit)
-
 route.get('/ver&category=:category', ProductController.view)
 
 route.get('/cart', CartController.view)
@@ -56,40 +64,11 @@ route.get('/todos-os-produtos', (req, res, next) => {
     res.redirect('/login');
 }, ProductController.viewAll);
 
-route.get('/admin/dashboard', (req, res, next) => {
-    if (req.session.user && req.session.user.tipo === 'admin') {
-        return next();
-    }
-    res.redirect('/login');
-}, DashboardController.index);
-
-route.get('/admin/usuarios', (req, res, next) => {
-    if (req.session.user && req.session.user.tipo === 'admin') {
-        return next();
-    }
-    res.redirect('/login');
-}, UserController.listUsers);
-
-route.get('/editar-usuario', (req, res, next) => {
-    if (req.session.user && req.session.user.tipo === 'admin') {
-        return next();
-    }
-    res.redirect('/login');
-}, UserController.showEditUser);
-
-route.post('/editar-usuario', (req, res, next) => {
-    if (req.session.user && req.session.user.tipo === 'admin') {
-        return next();
-    }
-    res.redirect('/login');
-}, UserController.updateUser);
-
-route.get('/deletar-usuario', (req, res, next) => {
-    if (req.session.user && req.session.user.tipo === 'admin') {
-        return next();
-    }
-    res.redirect('/login');
-}, UserController.deleteUser);
+route.get('/admin/dashboard', requireAdmin, DashboardController.index)
+route.get('/admin/usuarios', requireAdmin, UserController.listUsers)
+route.get('/editar-usuario', requireAdmin, UserController.showEditUser)
+route.post('/editar-usuario', requireAdmin, UserController.updateUser)
+route.get('/deletar-usuario', requireAdmin, UserController.deleteUser)
 
 route.get('/admin/:code', LoginController.open)
 

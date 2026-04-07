@@ -72,7 +72,7 @@
           <span style="font-family: 'Press Start 2P', cursive; color: #2A7AE4; font-size: 14px;">C_C</span>
         </a>
 
-        <form action="/search" method="POST" class="header__form">
+        <form action="/search" method="GET" class="header__form">
           <label for="h__input" class="sr-only">
             Digite o que está procurando
           </label>
@@ -123,6 +123,12 @@
       <i class="header__search icon-search"></i>
       <i class="header__search icon-plus"></i>
     </header>
+
+    <% if (flash) { %>
+    <div class="toast toast--<%= flash.type %>">
+      <p><%= flash.message %></p>
+    </div>
+    <% } %>
 
     <main>
       <!-- The page will render the correct page according to the URL/routes -->
@@ -312,6 +318,15 @@
     <script type="module" src="/scripts/forms.js"></script>
     <script src="/scripts/drag-n-drop.js"></script>
     <script src="https://github.com/codermarcos/simple-mask-money/releases/download/v3.0.0/simple-mask-money.js"></script>
+
+    <script>
+      const toast = document.querySelector('.toast')
+      if (toast) {
+        setTimeout(() => {
+          toast.classList.add('toast--hide')
+        }, 4200)
+      }
+    </script>
 
     <a href="#header" class="back-to-top" title="Voltar ao topo">
         <i class="icon-arrow-up">↑</i> 

@@ -1,22 +1,16 @@
 <!-- Ver categoria -->
 <section class="products container highlight">
   <div class="products__text">
-    <h2>Produtos selecionados</h2>
+    <h2><%= heading || 'Produtos selecionados' %></h2>
+    <p style="font-size: 0.95rem; color: var(--black-80); margin-top: 0.5rem;"><%= itemCount %> produto(s) encontrados</p>
   </div>
   <div class="products__card grid view">
     <% productsList.forEach(product => { %>
     <div>
-      <img src="<%= product.image %>" alt="<%= product.altText %>" />
+      <img loading="lazy" src="<%= product.image %>" alt="<%= product.altText %>" />
       <h3><%= product.name %></h3>
       <p><%= product.price %></p>
-      <a
-        class="products__card--view"
-        href="#"
-        method="POST"
-        data-id="<%= product.id %>"
-      >
-        Ver produto
-      </a>
+      <a class="products__card--view" href="/produto/<%= product.id %>">Ver produto</a>
     </div>
     <% }) %>
   </div>

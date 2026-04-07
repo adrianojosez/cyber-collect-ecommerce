@@ -74,6 +74,11 @@ module.exports = {
       await persistCartItem(db, req.session.user.id, productId, 1)
     }
 
+    req.session.flash = {
+      type: 'success',
+      message: `"${product.name}" adicionado ao carrinho com sucesso!`
+    }
+
     await db.close()
     return res.redirect(redirectUrl)
   },
@@ -94,6 +99,11 @@ module.exports = {
     req.session.cart = req.session.cart.filter(
       item => String(item.id) !== String(productId)
     )
+
+    req.session.flash = {
+      type: 'info',
+      message: 'Produto removido do carrinho.'
+    }
 
     return res.redirect('/cart')
   },

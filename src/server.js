@@ -14,7 +14,7 @@ server.use(express.urlencoded({extended: true, limit: '50mb'}))
 
 // --- CONFIGURAÇÃO DA SESSÃO (DEVE VIR ANTES DAS ROTAS) ---
 server.use(session({
-  secret: 'cybercollect_secret',
+  secret: process.env.SESSION_SECRET || 'cybercollect_secret',
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 3600000 } // Sessão dura 1 hora
@@ -24,9 +24,11 @@ Database.initDatabase().catch(error =>
   console.error('Erro ao inicializar a tabela cart_items:', error)
 )
 
-// Middleware para o Header (Faz o 'user' aparecer em todas as páginas)
+// Middleware para o Header e variáveis globais
 server.use((req, res, next) => {
   res.locals.user = req.session.user || undefined
+  res.locals.flash = req.session.flash || null
+  delete req.session.flash
 
   if (!req.session.cart) {
     req.session.cart = []

@@ -108,6 +108,39 @@ input[type='search']::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
 
+/* Toast messages */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(42, 122, 228, 0.95);
+  color: white;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  z-index: 9999;
+  max-width: min(320px, calc(100vw - 40px));
+  font-size: 0.95rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast--hide {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+.toast--success {
+  background: #2a7ae4;
+}
+
+.toast--info {
+  background: #444;
+}
+
+.toast--error {
+  background: #e83f5b;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

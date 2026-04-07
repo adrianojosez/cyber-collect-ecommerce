@@ -56,13 +56,23 @@ module.exports = {
   async open(req, res) {
     const db = await Database()
     const productId = req.params.code
-    const product = await db.get(
-      `SELECT * FROM products WHERE id = ${productId}`
-    )
+    const product = await db.get('SELECT * FROM products WHERE id = ?', [productId])
+
+    if (!product) {
+      await db.close()
+      return res.status(404).render('index', {
+        page: '404',
+        title: 'Produto não encontrado',
+        button: '<a class="header__button button__void button" href="/">Voltar ao início</a>'
+      })
+    }
 
     const similar = await db.all(
-      `SELECT * FROM products WHERE category = "${product.category}" AND id != ${product.id}`
+      'SELECT * FROM products WHERE category = ? AND id != ?',
+      [product.category, product.id]
     )
+
+    await db.close()
 
     res.render('index', {
       page: 'product',
@@ -72,7 +82,7 @@ module.exports = {
       ogTitle: product.name,
       ogDescription: product.description,
       ogImage: product.image,
-      canonical: `https://seusite.com/produto&id=${productId}`,
+      canonical: `https://seusite.com/produto/${productId}`,
       jsonLd: {
         "@context": "https://schema.org",
         "@type": "Product",
@@ -103,9 +113,11 @@ module.exports = {
     const alt = req.body.imgAlt
     const category = req.body.category
 
-    await db.get(`SELECT * FROM products WHERE id = ${roomId}`).then(item => {
-      if (item === undefined) {
-        db.run(`INSERT INTO products (
+    const item = await db.get('SELECT * FROM products WHERE id = ?', [roomId])
+
+    if (!item) {
+      await db.run(
+        `INSERT INTO products (
           id,
           image,
           name,
@@ -113,39 +125,28 @@ module.exports = {
           description,
           category,
           altText
-        ) VALUES (
-          ${roomId},
-          "${file}",
-          "${prodName}",
-          "${price}",
-          "${description}",
-          "${category}",
-          "${alt}"
-        )`)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [roomId, file, prodName, price, description, category, alt]
+      )
+    } else {
+      await db.run(
+        `UPDATE products SET image = ?, name = ?, price = ?, description = ?, category = ?, altText = ? WHERE id = ?`,
+        [file, prodName, price, description, category, alt, roomId]
+      )
+    }
 
-        res.redirect(`/produto&id=${roomId}`)
-        db.close()
-      } else {
-        db.run(
-          `UPDATE products SET image = "${file}", name = "${prodName}", price = "${price}", description = "${description}", category = "${category}", altText = "${alt}" WHERE id = ${roomId}`
-        )
-        db.close()
-        res.redirect(`/produto&id=${roomId}`)
-      }
-    })
+    await db.close()
+    res.redirect(`/produto/${roomId}`)
   },
 
   async show(req, res) {
     const db = await Database()
-    const starWars = await db.all(
-      'SELECT * FROM products WHERE category = "star-wars"'
-    )
-    const videogames = await db.all(
-      'SELECT * FROM products WHERE category = "videogames"'
-    )
-    const misc = await db.all(
-      'SELECT * FROM products WHERE category = "diversos"'
-    )
+    const starWars = await db.all('SELECT * FROM products WHERE category = ? LIMIT 6', ['star-wars'])
+    const videogames = await db.all('SELECT * FROM products WHERE category = ? LIMIT 6', ['videogames'])
+    const misc = await db.all('SELECT * FROM products WHERE category = ? LIMIT 6', ['diversos'])
+    const featuredCategories = await db.all('SELECT DISTINCT category FROM products ORDER BY category')
+
+    await db.close()
 
     res.render('index', {
       page: 'main',
@@ -161,37 +162,44 @@ module.exports = {
         '<a class="header__button button__void button" href="login">Login</a>',
       starWars: starWars,
       consoles: videogames,
-      diversos: misc
+      diversos: misc,
+      categories: featuredCategories
     })
   },
 
   async view(req, res) {
     const db = await Database()
-    const searchQuery = req.body.search
-    const category = req.params.category
-    const products = await db.all(
-      `SELECT * FROM products WHERE category = "${category}"`
-    )
-    const queries = await db.all(`
-    SELECT * FROM products WHERE name LIKE "%${searchQuery}%" OR description LIKE "%${searchQuery}%" OR category LIKE "%${searchQuery}%" OR altText LIKE "%${searchQuery}%"`)
+    const searchQuery = req.query.search || req.body.search || ''
+    const category = req.query.category || req.params.category
+
+    let productsList = []
+    let heading = 'Produtos selecionados'
 
     if (category) {
-      res.render('index', {
-        page: 'view-category',
-        title: 'Ver Produtos',
-        button:
-          '<a class="header__button button__void button" href="login">Login</a>',
-        productsList: products
-      })
+      productsList = await db.all('SELECT * FROM products WHERE category = ?', [category])
+      heading = `Categoria: ${category}`
+    } else if (searchQuery) {
+      const pattern = `%${searchQuery}%`
+      productsList = await db.all(
+        `SELECT * FROM products WHERE name LIKE ? OR description LIKE ? OR category LIKE ? OR altText LIKE ?`,
+        [pattern, pattern, pattern, pattern]
+      )
+      heading = `Resultados para "${searchQuery}"`
     } else {
-      res.render('index', {
-        page: 'view-category',
-        title: 'Ver Produtos',
-        button:
-          '<a class="header__button button__void button" href="login">Login</a>',
-        productsList: queries
-      })
+      productsList = await db.all('SELECT * FROM products ORDER BY id DESC')
     }
+
+    await db.close()
+
+    res.render('index', {
+      page: 'view-category',
+      title: 'Ver Produtos',
+      button:
+        '<a class="header__button button__void button" href="login">Login</a>',
+      productsList: productsList,
+      heading,
+      itemCount: productsList.length
+    })
   },
 
   async viewAll(req, res) {
@@ -209,7 +217,9 @@ module.exports = {
   async openEdit(req, res) {
     const db = await Database()
     const itemCode = req.params.code
-    const item = await db.get(`SELECT * FROM products WHERE id = ${itemCode}`)
+    const item = await db.get('SELECT * FROM products WHERE id = ?', [itemCode])
+
+    await db.close()
 
     res.render('index', {
       page: 'edit',

@@ -14,10 +14,10 @@ module.exports = {
 
     if (action === 'delete') {
       await db.run(`DELETE FROM products WHERE id = ${itemCode}`)
-      res.redirect('/todos-os-produtos')
+      res.redirect('/admin/todos-os-produtos')
     } else {
       // Handle other actions if needed
-      res.redirect('/todos-os-produtos')
+      res.redirect('/admin/todos-os-produtos')
     }
 
     await db.close()

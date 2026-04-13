@@ -57,12 +57,7 @@ route.get('/login', (req, res) =>
 )
 
 // Rota de visualização de todos os produtos (Protegida)
-route.get('/todos-os-produtos', (req, res, next) => {
-    if (req.session.user && req.session.user.tipo === 'admin') {
-        return next();
-    }
-    res.redirect('/login');
-}, ProductController.viewAll);
+route.get('/admin/todos-os-produtos', requireAdmin, ProductController.viewAll);
 
 route.get('/admin/dashboard', requireAdmin, DashboardController.index)
 route.get('/admin/usuarios', requireAdmin, UserController.listUsers)
@@ -194,10 +189,10 @@ route.post('/search', ProductController.view)
 
 // defining post routes
 // Implicitly, the .index is receiving (req, res) inside ProductController.js
-route.post('/todos-os-produtos/:code/:action', requireAdmin, ProductController.index) // to delete/edit buttons
+route.post('/admin/todos-os-produtos/:code/:action', requireAdmin, ProductController.index) // to delete/edit buttons
 // It also requires a password but it will not be posted on the url
 route.post('/produto/:code', ProductController.index) // to open product page
-route.post('/todos-os-produtos', LoginController.enter) // to validate login
+route.post('/admin/todos-os-produtos', LoginController.enter) // to validate login
 route.post('/admin/:code', ProductController.create) // to create new product id
 route.post('/produto&id:code', ProductController.save) // open page of recently created product
 // Onde você define as rotas de cadastro

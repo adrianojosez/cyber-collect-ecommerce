@@ -76,7 +76,7 @@ module.exports = {
 
         if (user.tipo === 'admin') {
             req.session.cart = []
-            return res.redirect('/todos-os-produtos')
+            return res.redirect('/admin/todos-os-produtos')
         } else {
             if (!req.session.cart) {
                 req.session.cart = []

@@ -40,7 +40,7 @@ function handleClick(event, action) {
 
   if (action == 'delete') {
     // Set URL route to modal form action attribute
-    modalForm.setAttribute('action', `/todos-os-produtos/${itemCode}/${action}`)
+    modalForm.setAttribute('action', `/admin/todos-os-produtos/${itemCode}/${action}`)
     modal.openModal()
   }
 }

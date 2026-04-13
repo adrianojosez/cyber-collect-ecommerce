@@ -94,17 +94,9 @@
     
     <% if (user.tipo === 'admin') { %>
         <a href="/admin/dashboard" class="button" style="background-color: #2A7AE4; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Painel</a>
-        
-        <a href="/todos-os-produtos" class="button" style="background-color: #555; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Gerenciar</a>
-
+        <a href="/admin/todos-os-produtos" class="button" style="background-color: #555; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Gerenciar</a>
         <a href="/admin/usuarios" class="button" style="background-color: #9b59b6; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Usuários</a>
     <% } %>
-
-    <a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Sair</a>
-<% } else { %>
-    <%- button %> 
-    <a href="/cadastro" class="button__blue button">Cadastrar</a>
-<% } %>
 
     <a href="/cart" class="button" style="background-color: #2A7AE4; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px; position: relative;">
       <i class="fas fa-shopping-cart" style="font-size: 16px;"></i>
@@ -112,12 +104,14 @@
         <span class="cart-badge" style="position: absolute; top: -8px; right: -8px; background: #ff4d4d; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold; min-width: 18px; text-align: center;"><%= cartItemCount %></span>
       <% } %>
     </a>
-        
-        <button id="theme-toggle" class="button" style="background: none; border: none; cursor: pointer; font-size: 20px;">
-        🌙
+    <a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Sair</a>
+    <button id="theme-toggle" class="button" style="background: none; border: none; cursor: pointer; font-size: 20px;">
+      🌙
     </button>
-      <!-- <%- button %>  -->
-      <!-- <a href="/cadastro" class="button__blue button">Cadastrar</a> -->
+<% } else { %>
+    <%- button %>
+    <a href="/cadastro" class="button__blue button">Cadastrar</a>
+<% } %>
       </div>
       <!-- <a class="header__button button__void button" href="login">Login</a> -->
       <i class="header__search icon-search"></i>

@@ -5,22 +5,22 @@ module.exports = {
   async index(req, res) {
     const db = await Database()
     const itemCode = req.params.code // gets parameter from form action route variable
-    const password = req.body.password // gets password typed on password input on modal
     const action = req.params.action // gets action from form action route variable
 
-    // Verificar se a senha está correta
-    const verifyPass = await db
-      .get(`SELECT * FROM admin WHERE password = "${password}"`)
-      .then(pass => {
-        if (pass === undefined) {
-          res.redirect('/pass-incorrect')
-        } else if (pass.password !== password) {
-          res.redirect('/pass-incorrect')
-        } else {
-          db.run(`DELETE FROM products WHERE id = ${itemCode}`)
-          res.redirect('/todos-os-produtos')
-        }
-      })
+    // Verificar se o usuário está logado como admin
+    if (!req.session.user || req.session.user.tipo !== 'admin') {
+      return res.redirect('/login')
+    }
+
+    if (action === 'delete') {
+      await db.run(`DELETE FROM products WHERE id = ${itemCode}`)
+      res.redirect('/todos-os-produtos')
+    } else {
+      // Handle other actions if needed
+      res.redirect('/todos-os-produtos')
+    }
+
+    await db.close()
   },
 
   async create(req, res) {

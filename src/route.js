@@ -194,7 +194,7 @@ route.post('/search', ProductController.view)
 
 // defining post routes
 // Implicitly, the .index is receiving (req, res) inside ProductController.js
-route.post('/todos-os-produtos/:code/:action', ProductController.index) // to delete/edit buttons
+route.post('/todos-os-produtos/:code/:action', requireAdmin, ProductController.index) // to delete/edit buttons
 // It also requires a password but it will not be posted on the url
 route.post('/produto/:code', ProductController.index) // to open product page
 route.post('/todos-os-produtos', LoginController.enter) // to validate login

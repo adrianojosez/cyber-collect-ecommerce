@@ -181,8 +181,8 @@ module.exports = {
     } else if (searchQuery) {
       const pattern = `%${searchQuery}%`
       productsList = await db.all(
-        `SELECT * FROM products WHERE name LIKE ? OR description LIKE ? OR category LIKE ? OR altText LIKE ?`,
-        [pattern, pattern, pattern, pattern]
+        `SELECT * FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY CASE WHEN name LIKE ? THEN 0 ELSE 1 END`,
+        [pattern, pattern, pattern]
       )
       heading = `Resultados para "${searchQuery}"`
     } else {

@@ -154,12 +154,13 @@
         </ul>
       </div>
 
-      <form action="" class="contact__form">
+      <form action="/contato" method="POST" class="contact__form">
         <fieldset>
           <legend>Fale conosco</legend>
           <label for="name" class="sr-only">Escreva seu nome</label>
           <input
             id="name"
+            name="name"
             type="text"
             class=""
             data-type="contact"
@@ -168,9 +169,30 @@
             required
           />
           <span role="alert"></span>
+          <label for="email" class="sr-only">Digite seu email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class=""
+            data-type="contact"
+            maxlength="80"
+            placeholder="Email"
+            required
+          />
+          <span role="alert"></span>
+          <label for="subject" class="sr-only">Selecione o assunto</label>
+          <select id="subject" name="subject" class="" required>
+            <option value="">Selecione o assunto</option>
+            <option value="Dúvida">Dúvida</option>
+            <option value="Devolução">Devolução</option>
+            <option value="Sugestão">Sugestão</option>
+            <option value="Outros">Outros</option>
+          </select>
+          <span role="alert"></span>
           <label for="message" class="sr-only">Escreva sua mensagem</label>
           <textarea
-            name=""
+            name="message"
             id="message"
             class=""
             data-type="contact"

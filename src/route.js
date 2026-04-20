@@ -7,6 +7,7 @@ const LoginController = require('./controllers/LoginController')
 const CadastroController = require('./controllers/cadastroController')
 const DashboardController = require('./controllers/DashboardController')
 const UserController = require('./controllers/UserController')
+const ContactController = require('./controllers/ContactController')
 
 // saving all route functionalities that Express has
 const route = express.Router()
@@ -198,6 +199,8 @@ route.post('/produto&id:code', ProductController.save) // open page of recently 
 // Onde você define as rotas de cadastro
 route.get('/cadastro', CadastroController.index)     // Chama a função index
 route.post('/cadastro', CadastroController.cadastrar) // Chama a função cadastrar (ajustado de .save para .cadastrar)
+route.post('/contato', ContactController.send)
+
 
 // exporting the routes
 module.exports = route

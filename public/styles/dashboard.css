@@ -62,7 +62,6 @@
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     margin-bottom: 3rem;
-    overflow-x: auto;
 }
 
 .category-table h4, .products-table h4 {
@@ -453,7 +452,6 @@ tbody tr:hover {
 }
 
 .table-wrapper {
-    overflow-x: auto;
 }
 
 /* Tabela Moderna */

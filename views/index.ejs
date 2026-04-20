@@ -58,36 +58,35 @@
   <body>
     <!-- Cabeçalho -->
     <header class="header container">
-      <div>
-
-        <!-- <a class="header__logo" href="/" id="header">
-          <img
-            class="header__logo--img"
-            src="/images/logo.svg"
-            alt="Loja Informática"
-          />
-        </a> -->
-        
+      <div class="header__brand">
         <a class="header__logo" href="/" id="header" style="text-decoration: none;">
           <span style="font-family: 'Press Start 2P', cursive; color: #2A7AE4; font-size: 14px;">C_C</span>
         </a>
-
-        <form action="/search" method="GET" class="header__form">
-          <label for="h__input" class="sr-only">
-            Digite o que está procurando
-          </label>
-          <input
-            type="search"
-            id="h__input"
-            name="search"
-            class="header__input"
-            minlength="3"
-            placeholder="O que deseja procurar?"
-          />
-          <button type="submit" style="display: none"></button>
-        </form>
       </div>
-      <div class="header__buttons" style="display: flex; gap: 16px; align-items: center;">
+
+      <form action="/search" method="GET" class="header__form">
+        <label for="h__input" class="sr-only">
+          Digite o que está procurando
+        </label>
+        <input
+          type="search"
+          id="h__input"
+          name="search"
+          class="header__input"
+          minlength="3"
+          placeholder="O que deseja procurar?"
+        />
+        <button type="submit" style="display: none"></button>
+      </form>
+
+      <div class="header__actions">
+        <button id="header-menu-toggle" class="header__hamburger" type="button" aria-label="Abrir menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="header__buttons">
 
 <% if (locals.user && user.name) { %>
     <span class="user__name">Olá, <strong><%= user.name %></strong></span>
@@ -112,10 +111,35 @@
     <%- button %>
     <a href="/cadastro" class="button__blue button">Cadastrar</a>
 <% } %>
+        </div>
+
+        <button class="header__search icon-search" type="button" aria-label="Pesquisar"></button>
+        <button class="header__search icon-plus" type="button" aria-label="Fechar pesquisa"></button>
       </div>
-      <!-- <a class="header__button button__void button" href="login">Login</a> -->
-      <i class="header__search icon-search"></i>
-      <i class="header__search icon-plus"></i>
+
+      <div class="header__overlay"></div>
+      <nav class="header__mobile-menu" aria-hidden="true">
+        <div class="header__mobile-header">
+          <span class="header__mobile-title">Menu</span>
+          <button id="header-menu-close" class="header__mobile-close" type="button" aria-label="Fechar menu">×</button>
+        </div>
+
+        <% if (locals.user && user.name) { %>
+          <p class="mobile-user">Olá, <strong><%= user.name %></strong></p>
+          <% if (user.tipo === 'admin') { %>
+            <a href="/admin/dashboard" class="button header__mobile-link" style="background-color: #2A7AE4; color: white;">Painel</a>
+            <a href="/admin/todos-os-produtos" class="button header__mobile-link" style="background-color: #555; color: white;">Gerenciar</a>
+            <a href="/admin/usuarios" class="button header__mobile-link" style="background-color: #9b59b6; color: white;">Usuários</a>
+          <% } %>
+          <a href="/logout" class="button header__mobile-link" style="background-color: #ff4d4d; color: white;">Sair</a>
+          <button id="mobile-theme-toggle" class="button header__mobile-theme-toggle" type="button">Alternar tema</button>
+        <% } else { %>
+          <div class="mobile-auth-links">
+            <%- button %>
+            <a href="/cadastro" class="button__blue button">Cadastrar</a>
+          </div>
+        <% } %>
+      </nav>
     </header>
 
     <% if (flash) { %>

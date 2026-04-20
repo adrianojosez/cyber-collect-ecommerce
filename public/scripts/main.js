@@ -8,6 +8,29 @@ const deleteBtn = document.querySelectorAll('.icon-delete')
 const prodLink = document.querySelectorAll('.products__card--view')
 const addProduct = document.querySelector('.add')
 const searchBtn = document.querySelectorAll('.header__search')
+const menuToggle = document.querySelector('#header-menu-toggle')
+const menuClose = document.querySelector('#header-menu-close')
+const mobileMenu = document.querySelector('.header__mobile-menu')
+const menuOverlay = document.querySelector('.header__overlay')
+const mobileThemeToggle = document.querySelector('#mobile-theme-toggle')
+
+const toggleMobileMenu = open => {
+  if (!mobileMenu || !menuOverlay) return
+  const action = open ? 'add' : 'remove'
+  mobileMenu.classList[action]('active')
+  menuOverlay.classList[action]('active')
+  document.body.classList[action]('menu-open')
+  document.documentElement.classList[action]('menu-open')
+  mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true')
+}
+
+menuToggle?.addEventListener('click', () => toggleMobileMenu(true))
+menuClose?.addEventListener('click', () => toggleMobileMenu(false))
+menuOverlay?.addEventListener('click', () => toggleMobileMenu(false))
+mobileThemeToggle?.addEventListener('click', () => {
+  document.querySelector('#theme-toggle')?.click()
+  toggleMobileMenu(false)
+})
 
 // Open search bar on mobile
 searchBtn.forEach(btn => {

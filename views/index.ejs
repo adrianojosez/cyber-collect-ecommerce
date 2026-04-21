@@ -86,12 +86,14 @@
           <span></span>
         </button>
 
+        <% if (!locals.user || user.tipo !== 'admin') { %>
         <a href="/cart" class="header__cart-button" style="background-color: #2A7AE4; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; position: relative; display: flex; align-items: center; gap: 0.5rem;">
           <i class="fas fa-shopping-cart" style="font-size: 16px;"></i>
           <% if (cartItemCount > 0) { %>
             <span class="cart-badge" style="position: absolute; top: -8px; right: -8px; background: #ff4d4d; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold; min-width: 18px; text-align: center;"><%= cartItemCount %></span>
           <% } %>
         </a>
+        <% } %>
 
         <div class="header__buttons">
 
@@ -104,9 +106,11 @@
         <a href="/admin/usuarios" class="button" style="background-color: #9b59b6; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Usuários</a>
     <% } %>
 
+    <% if (!user || user.tipo !== 'admin') { %>
     <a href="/my-orders" class="button" style="background-color: #6f42c1; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">
       <i class="fas fa-history" style="font-size: 16px;"></i>
     </a>
+    <% } %>
     <a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Sair</a>
     <button id="theme-toggle" class="button" style="background: none; border: none; cursor: pointer; font-size: 20px;">
       🌙
@@ -130,7 +134,9 @@
 
         <% if (locals.user && user.name) { %>
           <p class="mobile-user">Olá, <strong><%= user.name %></strong></p>
+          <% if (!user || user.tipo !== 'admin') { %>
           <a href="/my-orders" class="button header__mobile-link" style="background-color: #6f42c1; color: white;">Meus Pedidos</a>
+          <% } %>
           <% if (user.tipo === 'admin') { %>
             <a href="/admin/dashboard" class="button header__mobile-link" style="background-color: #2A7AE4; color: white;">Painel</a>
             <a href="/admin/todos-os-produtos" class="button header__mobile-link" style="background-color: #555; color: white;">Gerenciar</a>

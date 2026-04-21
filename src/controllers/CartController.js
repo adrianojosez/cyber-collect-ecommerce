@@ -176,5 +176,146 @@ module.exports = {
       total: total,
       totalFormatted: formatCurrency(total)
     })
+  },
+
+  async checkout(req, res) {
+    const db = await Database()
+
+    try {
+      // Verificar se usuário está logado
+      if (!req.session.user || !req.session.user.id) {
+        await db.close()
+        return res.redirect('/login')
+      }
+
+      const userId = req.session.user.id
+
+      // Buscar itens do carrinho
+      const cartItems = await db.all(
+        'SELECT ci.*, p.name, p.price FROM cart_items ci JOIN products p ON ci.product_id = p.id WHERE ci.user_id = ?',
+        [userId]
+      )
+
+      if (cartItems.length === 0) {
+        await db.close()
+        return res.redirect('/cart')
+      }
+
+      // Calcular total
+      let totalPrice = 0
+      for (const item of cartItems) {
+        totalPrice += parsePrice(item.price) * item.quantity
+      }
+
+      // Criar pedido
+      const orderResult = await db.run(
+        'INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, ?)',
+        [userId, totalPrice, 'concluído']
+      )
+      const orderId = orderResult.lastID
+
+      // Mover itens para order_items
+      for (const item of cartItems) {
+        await db.run(
+          'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
+          [orderId, item.product_id, item.quantity, parsePrice(item.price)]
+        )
+      }
+
+      // Limpar carrinho
+      await db.run('DELETE FROM cart_items WHERE user_id = ?', [userId])
+
+      // Atualizar pontos de fidelidade (1 ponto por real)
+      const pointsToAdd = Math.floor(totalPrice)
+      await db.run(
+        'UPDATE users SET points = points + ? WHERE id = ?',
+        [pointsToAdd, userId]
+      )
+
+      // Limpar sessão do carrinho
+      req.session.cart = []
+
+      await db.close()
+
+      // Redirecionar para dashboard com mensagem de sucesso
+      req.session.flash = {
+        type: 'success',
+        message: `Compra realizada com sucesso! Você ganhou ${pointsToAdd} pontos de fidelidade.`
+      }
+      return res.redirect('/admin/dashboard')
+
+    } catch (error) {
+      console.error('Erro no checkout:', error)
+      await db.close()
+      req.session.flash = {
+        type: 'error',
+        message: 'Erro ao processar a compra. Tente novamente.'
+      }
+      return res.redirect('/cart')
+    }
+  },
+
+  async myOrders(req, res) {
+    const db = await Database()
+
+    try {
+      // Verificar se usuário está logado
+      if (!req.session.user || !req.session.user.id) {
+        await db.close()
+        return res.redirect('/login')
+      }
+
+      const userId = req.session.user.id
+
+      // Buscar pontos de fidelidade do usuário
+      const user = await db.get('SELECT points FROM users WHERE id = ?', [userId])
+      const userPoints = user ? user.points : 0
+
+      // Buscar todos os pedidos do usuário ordenados pelos mais recentes
+      const orders = await db.all(
+        'SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC',
+        [userId]
+      )
+
+      // Formatar datas e preços
+      const formattedOrders = orders.map(order => ({
+        ...order,
+        total_price_formatted: formatCurrency(order.total_price),
+        created_at_formatted: new Date(order.created_at).toLocaleDateString('pt-BR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      }))
+
+      await db.close()
+
+      return res.render('index', {
+        page: 'my-orders',
+        title: 'Meus Pedidos',
+        description: 'Veja o histórico de seus pedidos na Cyber-Collect.',
+        keywords: 'pedidos, histórico, cyber-collect',
+        ogTitle: 'Meus Pedidos - Cyber-Collect',
+        ogDescription: 'Veja o histórico de seus pedidos.',
+        ogImage: '/images/logo.svg',
+        canonical: 'https://seusite.com/my-orders',
+        jsonLd: null,
+        button: '<a class="header__button button__void button" href="/login">Login</a>',
+        orders: formattedOrders,
+        userPoints: userPoints
+      })
+
+    } catch (error) {
+      console.error('Erro ao buscar pedidos:', error)
+      await db.close()
+      return res.render('index', {
+        page: '404',
+        title: 'Erro',
+        button: '<a class="header__button button__void button" href="/">Voltar</a>',
+        orders: []
+      })
+    }
   }
 }

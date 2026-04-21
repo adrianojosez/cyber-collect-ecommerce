@@ -1,0 +1,370 @@
+<section class="my-orders container">
+  <div class="my-orders__header">
+    <h1>Meus Pedidos</h1>
+    <p>Acompanhe o histórico de suas compras na Cyber-Collect</p>
+  </div>
+
+  <!-- Pontos de Fidelidade Banner -->
+  <div class="loyalty-banner">
+    <div class="loyalty-banner__content">
+      <i class="fas fa-medal loyalty-banner__icon"></i>
+      <% if (userPoints > 0) { %>
+        <span class="loyalty-banner__text">Você possui <strong><%= userPoints %></strong> pontos de fidelidade!</span>
+        <small class="loyalty-banner__subtitle">🚀 Em breve: Troque seus pontos por descontos exclusivos em suas próximas compras!</small>
+      <% } else { %>
+        <span class="loyalty-banner__text">Faça sua primeira compra e comece a ganhar pontos!</span>
+        <small class="loyalty-banner__subtitle">🚀 Em breve: Troque seus pontos por descontos exclusivos em suas próximas compras!</small>
+      <% } %>
+    </div>
+  </div>
+
+  <% if (!orders || orders.length === 0) { %>
+    <div class="my-orders__empty">
+      <div class="my-orders__empty-icon">
+        <i class="fas fa-inbox fa-4x"></i>
+      </div>
+      <p>Você ainda não realizou nenhuma compra.</p>
+      <a href="/" class="button button__blue">Começar Compras</a>
+    </div>
+  <% } else { %>
+    <div class="my-orders__content">
+      <!-- Desktop Table -->
+      <div class="my-orders__table">
+        <table>
+          <thead>
+            <tr>
+              <th>ID do Pedido</th>
+              <th>Data</th>
+              <th>Valor Total</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% orders.forEach(order => { %>
+              <tr>
+                <td class="my-orders__id">#<%= order.id %></td>
+                <td class="my-orders__date"><%= order.created_at_formatted %></td>
+                <td class="my-orders__total"><%= order.total_price_formatted %></td>
+                <td class="my-orders__status">
+                  <span class="status-badge status-<%= order.status %>">
+                    <%= order.status %>
+                  </span>
+                </td>
+                <td class="my-orders__actions">
+                  <a href="/pedido/<%= order.id %>" class="btn-small btn-view">Ver Detalhes</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Cards -->
+      <div class="my-orders__cards">
+        <% orders.forEach(order => { %>
+          <div class="my-orders__card">
+            <div class="my-orders__card-header">
+              <h3>Pedido #<%= order.id %></h3>
+              <span class="status-badge status-<%= order.status %>">
+                <%= order.status %>
+              </span>
+            </div>
+            <div class="my-orders__card-body">
+              <div class="card-row">
+                <span class="card-label">Data:</span>
+                <span class="card-value"><%= order.created_at_formatted %></span>
+              </div>
+              <div class="card-row">
+                <span class="card-label">Valor Total:</span>
+                <span class="card-value card-total"><%= order.total_price_formatted %></span>
+              </div>
+            </div>
+            <div class="my-orders__card-footer">
+              <a href="/pedido/<%= order.id %>" class="button button__primary">Ver Detalhes</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="my-orders__footer">
+      <a href="/" class="button button__outline">Voltar às Compras</a>
+    </div>
+  <% } %>
+</section>
+
+<style>
+  .my-orders {
+    padding: 2rem 0;
+  }
+
+  .my-orders__header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .my-orders__header h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .my-orders__header p {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .my-orders__empty {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin: 2rem 0;
+  }
+
+  .my-orders__empty-icon {
+    color: #ccc;
+    margin-bottom: 1rem;
+  }
+
+  .my-orders__empty p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .my-orders__content {
+    margin-bottom: 2rem;
+  }
+
+  .my-orders__table {
+    display: none;
+  }
+
+  .my-orders__table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .my-orders__table thead {
+    background: #f5f5f5;
+  }
+
+  .my-orders__table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .my-orders__table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .my-orders__table tbody tr:hover {
+    background: #f9f9f9;
+  }
+
+  .my-orders__id {
+    font-weight: 600;
+    color: #007bff;
+  }
+
+  .my-orders__date {
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .my-orders__total {
+    font-weight: 600;
+    color: #28a745;
+    font-size: 1.1rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .status-concluído {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-pendente {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .status-cancelado {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+  .my-orders__actions {
+    text-align: center;
+  }
+
+  .btn-small {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-view {
+    background: #007bff;
+    color: white;
+  }
+
+  .btn-view:hover {
+    background: #0056b3;
+    text-decoration: none;
+  }
+
+  .my-orders__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .my-orders__card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  .my-orders__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .my-orders__card-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+  }
+
+  .my-orders__card-body {
+    margin-bottom: 1rem;
+  }
+
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    color: #666;
+  }
+
+  .card-label {
+    font-weight: 600;
+  }
+
+  .card-value {
+    text-align: right;
+  }
+
+  .card-total {
+    font-weight: 600;
+    color: #28a745;
+    font-size: 1.1rem;
+  }
+
+  .my-orders__card-footer {
+    text-align: center;
+  }
+
+  .my-orders__footer {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .my-orders__table {
+      display: block;
+    }
+
+    .my-orders__cards {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .my-orders__table {
+      display: none;
+    }
+
+    .my-orders__cards {
+      display: flex;
+    }
+
+    .my-orders__card {
+      display: block;
+    }
+
+  .my-orders__header h1 {
+    font-size: 1.5rem;
+  }
+  }
+
+  .loyalty-banner {
+    background: linear-gradient(135deg, #f4e87c, #f5c518);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loyalty-banner__content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .loyalty-banner__icon {
+    font-size: 1.5rem;
+    color: #d4af37;
+  }
+
+  .loyalty-banner__text {
+    font-size: 1rem;
+  }
+
+  .loyalty-banner__text strong {
+    color: #b8860b;
+    font-size: 1.1rem;
+  }
+
+  .loyalty-banner__subtitle {
+    display: block;
+    font-size: 0.85rem;
+    color: #8b6914;
+    opacity: 0.8;
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+</style>

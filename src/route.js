@@ -39,6 +39,10 @@ route.get('/checkout', (req, res) => {
   res.send('Página de checkout em desenvolvimento. <a href="/cart">Voltar ao carrinho</a>')
 })
 
+route.post('/checkout', CartController.checkout)
+
+route.get('/my-orders', CartController.myOrders)
+
 // No seu arquivo route.js
 route.get('/logout', (req, res) => {
   req.session.destroy(err => {

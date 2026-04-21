@@ -173,6 +173,12 @@ body.menu-open {
   overflow: hidden;
 }
 
+.header__cart-button {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 @media (min-width: 769px) {
   .header__hamburger {
     display: none !important;
@@ -184,6 +190,23 @@ body.menu-open {
 
   .header__overlay {
     display: none !important;
+  }
+
+  .header__buttons {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    order: 3;
+  }
+
+  .header__cart-button {
+    order: 2;
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 }
 
@@ -210,8 +233,14 @@ body.menu-open {
     display: none !important;
   }
 
+  .header__cart-button {
+    display: flex !important;
+    order: 2;
+  }
+
   .header__hamburger {
     display: flex;
+    order: 3;
   }
 
   .header__actions {

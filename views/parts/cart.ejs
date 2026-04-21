@@ -126,7 +126,9 @@
         </div>
         <div class="cart__actions">
           <a href="/" class="button button__outline">Continuar Comprando</a>
-          <a href="/checkout" class="button button__primary">Finalizar Compra</a>
+          <form action="/checkout" method="POST" style="display: inline;">
+            <button type="submit" class="button button__primary">Finalizar Compra</button>
+          </form>
         </div>
       </div>
     </div>

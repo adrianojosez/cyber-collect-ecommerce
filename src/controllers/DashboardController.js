@@ -75,5 +75,21 @@ module.exports = {
             },
             button: '<a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Sair</a>'
         });
+    },
+
+    async centralAjuda(req, res) {
+        res.render('index', {
+            page: 'central-ajuda',
+            title: 'Central de Ajuda',
+            description: 'Encontre respostas para suas dúvidas sobre pedidos, pagamentos e sua conta.',
+            keywords: 'ajuda, faq, dúvidas, suporte, cyber-collect',
+            ogTitle: 'Central de Ajuda - Cyber-Collect',
+            ogDescription: 'Encontre respostas para suas perguntas frequentes.',
+            ogImage: '/images/logo.svg',
+            canonical: 'https://seusite.com/central-ajuda',
+            jsonLd: null,
+            button: '<a class="header__button button__void button" href="/login">Login</a>',
+            user: req.session.user || null
+        });
     }
 }

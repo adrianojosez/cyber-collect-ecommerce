@@ -43,6 +43,8 @@ route.post('/checkout', CartController.checkout)
 
 route.get('/my-orders', CartController.myOrders)
 
+route.get('/central-ajuda', DashboardController.centralAjuda)
+
 // No seu arquivo route.js
 route.get('/logout', (req, res) => {
   req.session.destroy(err => {

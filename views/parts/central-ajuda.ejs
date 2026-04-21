@@ -1,0 +1,320 @@
+<section class="central-ajuda container">
+  <div class="central-ajuda__header">
+    <h1>Central de Ajuda</h1>
+    <p>Encontre respostas rápidas para suas dúvidas mais comuns</p>
+  </div>
+
+  <!-- Categorias de Ajuda -->
+  <div class="central-ajuda__categories">
+    <!-- Pedidos -->
+    <div class="central-ajuda__category-card">
+      <div class="central-ajuda__icon">
+        <i class="fas fa-box"></i>
+      </div>
+      <h2>Pedidos</h2>
+      <div class="central-ajuda__faq">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Como faço para rastrear meu pedido?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Você pode rastrear seu pedido acessando a seção "Meus Pedidos" no seu perfil. Lá você encontrará o status atualizado de cada compra.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Qual é o prazo de entrega?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>O prazo de entrega varia de 3 a 7 dias úteis, dependendo da sua localização e do tipo de envio escolhido no checkout.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Posso cancelar meu pedido?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Você pode cancelar pedidos que ainda não foram processados (status "Pendente"). Para cancelamentos após processamento, entre em contato com nosso suporte.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagamentos -->
+    <div class="central-ajuda__category-card">
+      <div class="central-ajuda__icon">
+        <i class="fas fa-credit-card"></i>
+      </div>
+      <h2>Pagamentos</h2>
+      <div class="central-ajuda__faq">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Quais são as formas de pagamento aceitas?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Aceitamos cartões de crédito (Visa, Mastercard, Elo), débito e PIX. Você também pode parcelar suas compras em até 12x sem juros.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>É seguro fazer compras no Cyber-Collect?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Sim! Utilizamos criptografia SSL de última geração para proteger todos os seus dados de pagamento. Sua segurança é nossa prioridade.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Quanto tempo leva para o pagamento ser processado?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Pagamentos via PIX são instantâneos. Pagamentos com cartão de crédito/débito levam até 2 horas para confirmação.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Minha Conta -->
+    <div class="central-ajuda__category-card">
+      <div class="central-ajuda__icon">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <h2>Minha Conta</h2>
+      <div class="central-ajuda__faq">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Como redefinir minha senha?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Clique em "Esqueci minha senha" na página de login. Enviaremos um link de redefinição para seu e-mail cadastrado.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Como atualizar meus dados pessoais?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Acesse seu perfil e clique em "Editar Perfil". Altere as informações desejadas e salve as mudanças.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Como visualizar meus pontos de fidelidade?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Seus pontos de fidelidade aparecem na seção "Meus Pedidos" no topo da página, em um banner especial. A cada compra, você ganha novos pontos!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção de Contato -->
+  <div class="central-ajuda__contact">
+    <h2>Ainda tem dúvidas?</h2>
+    <p>Não encontrou a resposta que procurava? Entre em contato com nosso suporte!</p>
+    <a href="https://api.whatsapp.com/send/?phone=5513981242306&text&type=phone_number&app_absent=0" class="button button__blue">Entrar em Contato</a>
+  </div>
+</section>
+
+<style>
+  .central-ajuda {
+    padding: 3rem 0;
+  }
+
+  .central-ajuda__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .central-ajuda__header h1 {
+    font-size: 2.5rem;
+    color: #2a2a2a;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .central-ajuda__header p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+
+  .central-ajuda__categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .central-ajuda__category-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .central-ajuda__category-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .central-ajuda__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #2A7AE4, #1a5bb8);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .central-ajuda__icon i {
+    font-size: 1.8rem;
+    color: white;
+  }
+
+  .central-ajuda__category-card h2 {
+    font-size: 1.5rem;
+    color: #2a2a2a;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  .central-ajuda__faq {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    width: 100%;
+    padding: 1rem;
+    background: #f9f9f9;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.3s ease;
+  }
+
+  .faq-question:hover {
+    background: #efefef;
+  }
+
+  .faq-question.active {
+    background: linear-gradient(135deg, #2A7AE4, #1a5bb8);
+    color: white;
+  }
+
+  .faq-question i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-question.active i {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    display: none;
+    padding: 1rem;
+    background: white;
+    border-top: 1px solid #eee;
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .faq-answer.active {
+    display: block;
+  }
+
+  .central-ajuda__contact {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(42, 122, 228, 0.05), rgba(155, 89, 182, 0.05));
+    border-radius: 12px;
+    border: 2px solid #2A7AE4;
+  }
+
+  .central-ajuda__contact h2 {
+    font-size: 1.8rem;
+    color: #2a2a2a;
+    margin-bottom: 0.5rem;
+  }
+
+  .central-ajuda__contact p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .central-ajuda {
+      padding: 2rem 0;
+    }
+
+    .central-ajuda__header h1 {
+      font-size: 1.8rem;
+    }
+
+    .central-ajuda__categories {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .central-ajuda__category-card {
+      padding: 1.5rem;
+    }
+
+    .central-ajuda__contact {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  // FAQ Accordion
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', function() {
+      const isActive = this.classList.contains('active');
+      const answer = this.nextElementSibling;
+      const faqContainer = this.closest('.central-ajuda__faq');
+
+      // Fechar todos os itens da categoria
+      faqContainer.querySelectorAll('.faq-question').forEach(q => {
+        q.classList.remove('active');
+      });
+      faqContainer.querySelectorAll('.faq-answer').forEach(a => {
+        a.classList.remove('active');
+      });
+
+      // Abrir o clicado, se não estava ativo
+      if (!isActive) {
+        this.classList.add('active');
+        answer.classList.add('active');
+      }
+    });
+  });
+</script>

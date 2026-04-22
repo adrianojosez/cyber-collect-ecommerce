@@ -242,7 +242,7 @@ module.exports = {
         type: 'success',
         message: `Compra realizada com sucesso! Você ganhou ${pointsToAdd} pontos de fidelidade.`
       }
-      return res.redirect('/admin/dashboard')
+      return res.redirect('/my-orders')
 
     } catch (error) {
       console.error('Erro no checkout:', error)

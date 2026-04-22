@@ -317,5 +317,92 @@ module.exports = {
         orders: []
       })
     }
+  },
+
+  async showOrderDetails(req, res) {
+    const db = await Database()
+
+    try {
+      // Verificar se usuário está logado
+      if (!req.session.user || !req.session.user.id) {
+        await db.close()
+        return res.redirect('/login')
+      }
+
+      const userId = req.session.user.id
+      const orderId = req.params.id
+
+      // Buscar o pedido
+      const order = await db.get(
+        'SELECT * FROM orders WHERE id = ? AND user_id = ?',
+        [orderId, userId]
+      )
+
+      if (!order) {
+        await db.close()
+        return res.render('index', {
+          page: '404',
+          title: 'Pedido Não Encontrado',
+          button: '<a class="header__button button__void button" href="/my-orders">Voltar</a>'
+        })
+      }
+
+      // Buscar itens do pedido com JOIN em products
+      const orderItems = await db.all(
+        'SELECT oi.*, p.name, p.price, p.image FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?',
+        [orderId]
+      )
+
+      // Calcular subtotais e formatar
+      const itemsWithSubtotals = orderItems.map(item => {
+        const subtotal = parsePrice(item.price) * item.quantity
+        return {
+          ...item,
+          subtotal,
+          subtotalFormatted: formatCurrency(subtotal),
+          priceFormatted: formatCurrency(parsePrice(item.price))
+        }
+      })
+
+      // Pontos gerados nessa compra (1 ponto por real)
+      const pointsEarned = Math.floor(order.total_price)
+
+      await db.close()
+
+      return res.render('index', {
+        page: 'order-details',
+        title: `Detalhes do Pedido #${order.id}`,
+        description: `Veja os detalhes do seu pedido #${order.id}.`,
+        keywords: 'pedido, detalhes, cyber-collect',
+        ogTitle: `Pedido #${order.id} - Cyber-Collect`,
+        ogDescription: 'Veja os detalhes do seu pedido.',
+        ogImage: '/images/logo.svg',
+        canonical: `https://seusite.com/pedido/${order.id}`,
+        jsonLd: null,
+        button: '<a class="header__button button__void button" href="/login">Login</a>',
+        order: {
+          ...order,
+          total_price_formatted: formatCurrency(order.total_price),
+          created_at_formatted: new Date(order.created_at).toLocaleDateString('pt-BR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+          })
+        },
+        items: itemsWithSubtotals,
+        pointsEarned
+      })
+
+    } catch (error) {
+      console.error('Erro ao buscar detalhes do pedido:', error)
+      await db.close()
+      return res.render('index', {
+        page: '404',
+        title: 'Erro',
+        button: '<a class="header__button button__void button" href="/my-orders">Voltar</a>'
+      })
+    }
   }
 }

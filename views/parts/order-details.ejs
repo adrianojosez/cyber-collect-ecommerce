@@ -1,0 +1,161 @@
+<section class="order-details container">
+  <div class="order-details__header">
+    <h1>Detalhes do Pedido #<%= order.id %></h1>
+    <p>Data do Pedido: <%= order.created_at_formatted %></p>
+  </div>
+
+  <div class="order-details__content">
+    <div class="order-details__items">
+      <h2>Itens do Pedido</h2>
+      <% items.forEach(item => { %>
+        <div class="order-item">
+          <div class="order-item__image">
+            <img src="<%= item.image %>" alt="<%= item.name %>">
+          </div>
+          <div class="order-item__info">
+            <h3><%= item.name %></h3>
+            <p>Preço Unitário: <%= item.priceFormatted %></p>
+            <p>Quantidade: <%= item.quantity %></p>
+            <p>Subtotal: <%= item.subtotalFormatted %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+    <div class="order-details__summary">
+      <div class="summary-card">
+        <h3>Resumo do Pedido</h3>
+        <div class="summary-row">
+          <span>Valor Total:</span>
+          <strong><%= order.total_price_formatted %></strong>
+        </div>
+        <div class="summary-row">
+          <span>Pontos de Fidelidade Gerados:</span>
+          <strong><%= pointsEarned %> pontos</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-details__footer">
+    <a href="/my-orders" class="button button__blue">Voltar para Meus Pedidos</a>
+  </div>
+</section>
+
+<style>
+  .order-details {
+    padding: 2rem 0;
+  }
+
+  .order-details__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .order-details__header h1 {
+    color: #4a90e2; /* Azul */
+    margin-bottom: 0.5rem;
+  }
+
+  .order-details__header p {
+    color: #666;
+  }
+
+  .order-details__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .order-details__items h2 {
+    color: #4a90e2;
+    margin-bottom: 1rem;
+  }
+
+  .order-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .order-item__image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .order-item__info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+
+  .order-item__info p {
+    margin: 0.25rem 0;
+    color: #666;
+  }
+
+  .order-details__summary {
+    margin-top: 2rem;
+  }
+
+  .summary-card {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+
+  .summary-card h3 {
+    color: #4a90e2;
+    margin-bottom: 1rem;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .summary-row span {
+    color: #666;
+  }
+
+  .summary-row strong {
+    color: #333;
+  }
+
+  .order-details__footer {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .button__blue {
+    background-color: #4a90e2;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .button__blue:hover {
+    background-color: #357abd;
+  }
+
+  @media (max-width: 768px) {
+    .order-item {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .summary-row {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

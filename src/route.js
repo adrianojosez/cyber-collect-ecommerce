@@ -43,6 +43,8 @@ route.post('/checkout', CartController.checkout)
 
 route.get('/my-orders', CartController.myOrders)
 
+route.get('/pedido/:id', CartController.showOrderDetails)
+
 route.get('/central-ajuda', DashboardController.centralAjuda)
 
 // No seu arquivo route.js

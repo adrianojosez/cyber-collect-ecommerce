@@ -10,6 +10,9 @@
         class=""
         placeholder="Escreva seu email"
         data-type="email"
+        autocapitalize="none"
+        autocorrect="off"
+        spellcheck="false"
         required
       />
       <span role="alert"></span>
@@ -35,7 +38,10 @@
     id="pass"
     placeholder="Escreva sua senha"
     data-type="pass"
-    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[!@#$%^&*_=+-]).{6,12}$"
+    pattern="^.{6,}$"
+    autocapitalize="none"
+    autocorrect="off"
+    spellcheck="false"
     required
   />
   

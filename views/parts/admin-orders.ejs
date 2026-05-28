@@ -1,0 +1,176 @@
+<section class="dashboard admin-orders container" style="padding:2rem 0;">
+  <div class="dashboard__header" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
+    <div>
+      <h2 style="color:#1e293b; margin-bottom:0.5rem;">Pedidos do Administrador</h2>
+      <p style="color:#64748b; max-width:720px; line-height:1.6; font-size:0.95rem;">Lista completa de todos os pedidos realizados na loja, ordenados pelos mais recentes. Visualize o cliente, os produtos, o valor total e o status atual de cada pedido.</p>
+    </div>
+    <a href="/admin/dashboard" class="button" style="background-color:#2A7AE4; color:white; padding:10px 18px; border-radius:8px; text-decoration:none; font-weight:700; white-space:nowrap;">Voltar ao Painel</a>
+  </div>
+
+  <!-- Métricas Rápidas -->
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom:2rem;">
+    <% 
+      const pendentes = orders.filter(o => o.status === 'pendente').length;
+      const emSeparacao = orders.filter(o => o.status === 'em separação').length;
+      const faturamentoTotal = orders
+        .filter(o => o.status === 'concluído')
+        .reduce((sum, o) => sum + o.totalPrice, 0);
+    %>
+    
+    <!-- Card 1: Pendentes -->
+    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); transition:all 0.3s ease;">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div>
+          <p style="color:#94a3b8; font-size:0.85rem; font-weight:600; text-transform:uppercase; margin:0 0 8px 0; letter-spacing:0.5px;">📦 Pedidos Pendentes</p>
+          <h3 style="color:#f59e0b; font-size:2.5rem; margin:0; font-weight:700;"><%= pendentes %></h3>
+        </div>
+        <div style="width:60px; height:60px; background:#fef3c7; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:2rem;">⏳</div>
+      </div>
+    </div>
+
+    <!-- Card 2: Em Separação -->
+    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); transition:all 0.3s ease;">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div>
+          <p style="color:#94a3b8; font-size:0.85rem; font-weight:600; text-transform:uppercase; margin:0 0 8px 0; letter-spacing:0.5px;">⚙️ Em Separação</p>
+          <h3 style="color:#2A7AE4; font-size:2.5rem; margin:0; font-weight:700;"><%= emSeparacao %></h3>
+        </div>
+        <div style="width:60px; height:60px; background:#dbeafe; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:2rem;">🔄</div>
+      </div>
+    </div>
+
+    <!-- Card 3: Faturamento Total -->
+    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); transition:all 0.3s ease;">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div>
+          <p style="color:#94a3b8; font-size:0.85rem; font-weight:600; text-transform:uppercase; margin:0 0 8px 0; letter-spacing:0.5px;">💰 Faturamento Total</p>
+          <h3 style="color:#059669; font-size:2rem; margin:0; font-weight:700;">
+            <%= new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(faturamentoTotal) %>
+          </h3>
+        </div>
+        <div style="width:60px; height:60px; background:#d1fae5; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:2rem;">💵</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Busca rápida -->
+  <div style="display:flex; justify-content:flex-end; margin-bottom:12px; gap:12px;">
+    <input id="searchOrders" type="text" placeholder="Buscar por cliente, produto ou ID..." style="width:320px; max-width:100%; padding:10px 12px; border-radius:10px; border:1px solid #e2e8f0; background:#ffffff; color:#1e293b; box-shadow:0 1px 2px rgba(0,0,0,0.04);" />
+  </div>
+
+  <div class="products-table" style="background:transparent; padding:0;">
+    <table style="width:100%; border-collapse:separate; border-spacing:0 8px;">
+      <thead>
+        <tr>
+          <th style="padding:14px 16px; background:#f8fafc; color:#64748b; text-align:left; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; border-radius:8px 0 0 8px;">ID do Pedido</th>
+          <th style="padding:14px 16px; background:#f8fafc; color:#64748b; text-align:left; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Cliente</th>
+          <th style="padding:14px 16px; background:#f8fafc; color:#64748b; text-align:left; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Data</th>
+          <th style="padding:14px 16px; background:#f8fafc; color:#64748b; text-align:left; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Produtos Comprados</th>
+          <th style="padding:14px 16px; background:#f8fafc; color:#64748b; text-align:left; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Valor Total</th>
+          <th style="padding:14px 16px; background:#f8fafc; color:#64748b; text-align:left; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; border-radius:0 8px 8px 0;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (orders && orders.length) { %>
+          <% orders.forEach(order => { %>
+            <tr style="background:#ffffff; transition:all 0.3s ease; border-bottom:1px solid #e2e8f0;">
+              <td style="padding:20px 16px; border-radius:8px 0 0 8px;">
+                <strong style="color:#2A7AE4;">#<%= order.id %></strong>
+              </td>
+              <td style="padding:20px 16px; line-height:1.6;">
+                <span style="color:#1e293b; font-weight:600; display:block; margin-bottom:6px; transition:color 0.3s ease;" class="customer-name"><%= order.customerName %></span>
+                <span style="color:#64748b; font-size:0.9rem;"><%= order.customerEmail %></span>
+              </td>
+              <td style="padding:20px 16px; color:#64748b; font-size:0.95rem;"><%= order.createdAtFormatted %></td>
+              <td style="padding:20px 16px;">
+                <ul style="margin:0; padding:0; list-style:none;">
+                  <% order.products.forEach(item => { %>
+                    <li style="margin-bottom:8px; font-size:0.95rem; line-height:1.5; color:#1e293b; transition:color 0.3s ease;" class="product-name"><strong><%= item.name %></strong> x <%= item.quantity %> <span style="color:#94a3b8;">(<%= item.priceFormatted %>)</span></li>
+                  <% }) %>
+                </ul>
+              </td>
+              <td style="padding:20px 16px;"><strong style="color:#059669; font-size:1rem;"><%= order.totalPriceFormatted %></strong></td>
+              <td style="padding:20px 16px; border-radius:0 8px 8px 0;">
+                <form action="/admin/pedidos/update-status" method="POST" style="margin:0;">
+                  <input type="hidden" name="orderId" value="<%= order.id %>">
+                  <select name="newStatus" style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid #cbd5e1; background:#ffffff; color:#334155; font-weight:500; cursor:pointer; transition:all 0.3s ease; font-size:0.95rem;" onchange="this.form.submit()" onmouseover="this.style.borderColor='#94a3b8'; this.style.boxShadow='0 0 0 3px rgba(42, 122, 228, 0.1)'" onmouseout="this.style.borderColor='#cbd5e1'; this.style.boxShadow='none'">
+                    <option value="pendente" <%= order.status === 'pendente' ? 'selected' : '' %>>Pendente</option>
+                    <option value="em separação" <%= order.status === 'em separação' ? 'selected' : '' %>>Em Separação</option>
+                    <option value="concluído" <%= order.status === 'concluído' ? 'selected' : '' %>>Concluído</option>
+                  </select>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr style="background:#ffffff; border-radius:8px; border:none;">
+            <td colspan="6" style="padding:40px; text-align:center; color:#94a3b8; border-radius:8px;">
+              <p style="font-size:1rem; margin:0;">Nenhum pedido encontrado.</p>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <style>
+    /* Ocultar toast antigo apenas nesta página para usar SweetAlert2 */
+    .toast {
+      display: none !important;
+    }
+
+    tbody tr:hover {
+      background: #f0fdf4 !important;
+    }
+
+    tbody tr:hover .customer-name,
+    tbody tr:hover .product-name {
+      color: #2A7AE4;
+    }
+
+    tbody tr:hover {
+      box-shadow: 0 4px 12px rgba(42, 122, 228, 0.08);
+    }
+  </style>
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    // Mostrar toast se houver flash de sucesso
+    (function(){
+      try {
+        <% if (flash && flash.type === 'success') { %>
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: '<%= flash.message %>',
+            showConfirmButton: false,
+            timer: 3000,
+            background: '#16a34a',
+            color: '#ffffff'
+          });
+        <% } %>
+      } catch(e) { console.error(e); }
+    })();
+
+    // Filtro em tempo real para as linhas da tabela
+    (function(){
+      const input = document.getElementById('searchOrders');
+      if (!input) return;
+      input.addEventListener('keyup', function(e){
+        const term = e.target.value.trim().toLowerCase();
+        const rows = document.querySelectorAll('.products-table tbody tr');
+        rows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          if (term === '' || text.indexOf(term) !== -1) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    })();
+  </script>
+</section>

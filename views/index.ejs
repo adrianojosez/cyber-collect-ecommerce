@@ -41,7 +41,7 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="/styles/index.css" />
-    <% if (page === 'dashboard') { %>
+    <% if (page === 'dashboard' || page === 'admin-orders') { %>
     <link rel="stylesheet" href="/styles/dashboard.css" />
     <% } %>
     <% if (page === 'cart') { %>
@@ -104,6 +104,7 @@
         <a href="/admin/dashboard" class="button" style="background-color: #2A7AE4; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Painel</a>
         <a href="/admin/todos-os-produtos" class="button" style="background-color: #555; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Gerenciar</a>
         <a href="/admin/usuarios" class="button" style="background-color: #9b59b6; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Usuários</a>
+        <a href="/admin/pedidos" class="button" style="background-color: #f59e0b; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 8px;">Pedidos</a>
     <% } %>
 
     <% if (!user || user.tipo !== 'admin') { %>
@@ -141,6 +142,7 @@
             <a href="/admin/dashboard" class="button header__mobile-link" style="background-color: #2A7AE4; color: white;">Painel</a>
             <a href="/admin/todos-os-produtos" class="button header__mobile-link" style="background-color: #555; color: white;">Gerenciar</a>
             <a href="/admin/usuarios" class="button header__mobile-link" style="background-color: #9b59b6; color: white;">Usuários</a>
+            <a href="/admin/pedidos" class="button header__mobile-link" style="background-color: #f59e0b; color: white;">Pedidos</a>
           <% } %>
           <a href="/logout" class="button header__mobile-link" style="background-color: #ff4d4d; color: white;">Sair</a>
           <button id="mobile-theme-toggle" class="button header__mobile-theme-toggle" type="button">Alternar tema</button>

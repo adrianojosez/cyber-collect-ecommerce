@@ -1,5 +1,20 @@
 const Database = require('../db/config.js');
 
+const formatCurrency = value =>
+  new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(value)
+
+const formatDate = dateValue =>
+  new Date(dateValue).toLocaleDateString('pt-BR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+
 module.exports = {
     async index(req, res) {
         const db = await Database();
@@ -75,6 +90,105 @@ module.exports = {
             },
             button: '<a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Sair</a>'
         });
+    },
+
+    async adminOrders(req, res) {
+        const db = await Database();
+
+        const rows = await db.all(`
+            SELECT
+                o.id AS order_id,
+                o.total_price,
+                o.status,
+                o.created_at,
+                u.name AS user_name,
+                u.email AS user_email,
+                oi.quantity,
+                oi.price AS item_price,
+                p.name AS product_name
+            FROM orders o
+            JOIN users u ON o.user_id = u.id
+            JOIN order_items oi ON oi.order_id = o.id
+            JOIN products p ON oi.product_id = p.id
+            ORDER BY o.created_at DESC, o.id DESC
+        `);
+
+        const ordersMap = new Map();
+
+        rows.forEach(row => {
+            if (!ordersMap.has(row.order_id)) {
+                ordersMap.set(row.order_id, {
+                    id: row.order_id,
+                    customerName: row.user_name,
+                    customerEmail: row.user_email,
+                    totalPrice: row.total_price,
+                    totalPriceFormatted: formatCurrency(row.total_price),
+                    status: row.status,
+                    createdAt: row.created_at,
+                    createdAtFormatted: formatDate(row.created_at),
+                    products: []
+                });
+            }
+
+            const order = ordersMap.get(row.order_id);
+            order.products.push({
+                name: row.product_name,
+                quantity: row.quantity,
+                price: row.item_price,
+                priceFormatted: formatCurrency(row.item_price)
+            });
+        });
+
+        const orders = Array.from(ordersMap.values());
+
+        await db.close();
+
+        return res.render('index', {
+            page: 'admin-orders',
+            title: 'Pedidos do Administrador',
+            description: 'Painel de pedidos do administrador. Visualize e gerencie todos os pedidos realizados na loja.',
+            keywords: 'admin, pedidos, gerenciamento, loja, painel',
+            ogTitle: 'Pedidos do Administrador',
+            ogDescription: 'Visualize todos os pedidos em tempo real no painel administrativo.',
+            ogImage: '/images/logo.svg',
+            canonical: 'https://seusite.com/admin/pedidos',
+            jsonLd: null,
+            button: '<a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Sair</a>',
+            orders: orders
+        });
+    },
+
+    async updateOrderStatus(req, res) {
+        const db = await Database();
+
+        try {
+            const { orderId, newStatus } = req.body;
+
+            if (!orderId || !newStatus) {
+                await db.close();
+                return res.status(400).send('Dados inválidos');
+            }
+
+            const validStatuses = ['pendente', 'em separação', 'concluído'];
+            if (!validStatuses.includes(newStatus)) {
+                await db.close();
+                return res.status(400).send('Status inválido');
+            }
+
+            await db.run(
+                'UPDATE orders SET status = ? WHERE id = ?',
+                [newStatus, orderId]
+            );
+
+            await db.close();
+            // Aviso visual via flash para a view
+            req.session.flash = { type: 'success', message: 'Sucesso! Status do pedido atualizado.' };
+            return res.redirect('/admin/pedidos');
+        } catch (error) {
+            console.error('Erro ao atualizar status do pedido:', error);
+            await db.close();
+            return res.status(500).send('Erro ao atualizar status');
+        }
     },
 
     async centralAjuda(req, res) {

@@ -16,6 +16,9 @@ const requireAdmin = (req, res, next) => {
   if (req.session.user && req.session.user.tipo === 'admin') {
     return next()
   }
+  if (req.session.user) {
+    return res.redirect('/my-orders')
+  }
   return res.redirect('/login')
 }
 
@@ -69,6 +72,8 @@ route.get('/login', (req, res) =>
 route.get('/admin/todos-os-produtos', requireAdmin, ProductController.viewAll);
 
 route.get('/admin/dashboard', requireAdmin, DashboardController.index)
+route.get('/admin/pedidos', requireAdmin, DashboardController.adminOrders)
+route.post('/admin/pedidos/update-status', requireAdmin, DashboardController.updateOrderStatus)
 route.get('/admin/usuarios', requireAdmin, UserController.listUsers)
 route.get('/editar-usuario', requireAdmin, UserController.showEditUser)
 route.post('/editar-usuario', requireAdmin, UserController.updateUser)

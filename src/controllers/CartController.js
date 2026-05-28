@@ -210,7 +210,7 @@ module.exports = {
       // Criar pedido
       const orderResult = await db.run(
         'INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, ?)',
-        [userId, totalPrice, 'concluído']
+        [userId, totalPrice, 'pendente']
       )
       const orderId = orderResult.lastID
 

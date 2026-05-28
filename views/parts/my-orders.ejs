@@ -18,13 +18,12 @@
     </div>
   </div>
 
-  <% if (!orders || orders.length === 0) { %>
-    <div class="my-orders__empty">
-      <div class="my-orders__empty-icon">
-        <i class="fas fa-inbox fa-4x"></i>
-      </div>
-      <p>Você ainda não realizou nenhuma compra.</p>
-      <a href="/" class="button button__blue">Começar Compras</a>
+  <% if (orders.length === 0) { %>
+    <div class="my-orders__empty" style="background:#ffffff; border:1px solid #e6eef8; padding:40px; border-radius:12px; text-align:center; box-shadow:0 2px 8px rgba(15,23,42,0.04);">
+      <div class="my-orders__empty-icon" style="font-size:64px; margin-bottom:12px;">🛒</div>
+      <h3 style="color:#1e293b; margin-bottom:8px;">Você ainda não realizou nenhum pedido.</h3>
+      <p style="color:#64748b; margin-bottom:16px;">Explore nossos produtos e faça seu primeiro pedido agora mesmo.</p>
+      <a href="/" class="button button__blue" style="padding:10px 18px; border-radius:8px;">Ver Produtos</a>
     </div>
   <% } else { %>
     <div class="my-orders__content">
@@ -47,9 +46,40 @@
                 <td class="my-orders__date"><%= order.created_at_formatted %></td>
                 <td class="my-orders__total"><%= order.total_price_formatted %></td>
                 <td class="my-orders__status">
-                  <span class="status-badge status-<%= order.status %>">
-                    <%= order.status %>
-                  </span>
+                  <div style="display:flex; align-items:center; gap:12px; min-width:300px;">
+                    <!-- Stepper -->
+                    <div style="display:flex; align-items:center; width:100%; gap:8px;">
+                      <!-- Estágio 1: Recebido -->
+                      <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+                        <div style="width:36px; height:36px; border-radius:50%; background:<%= order.status !== 'pendente' && order.status !== undefined ? '#059669' : '#f0fdf4' %>; border:2px solid <%= order.status !== 'pendente' && order.status !== undefined ? '#059669' : '#cbd5e1' %>; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.9rem; transition:all 0.4s ease;">
+                          <% if (order.status !== 'pendente' && order.status !== undefined) { %>✓<% } else { %>1<% } %>
+                        </div>
+                        <span style="font-size:0.75rem; color:#64748b; margin-top:6px; font-weight:500;">Recebido</span>
+                      </div>
+                      
+                      <!-- Linha 1 -->
+                      <div style="flex:1; height:2px; background:<%= (order.status === 'em separação' || order.status === 'concluído') ? '#059669' : '#e2e8f0' %>; margin:0 -4px; margin-top:16px; transition:all 0.4s ease;"></div>
+
+                      <!-- Estágio 2: Em Separação -->
+                      <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+                        <div style="width:36px; height:36px; border-radius:50%; background:<%= order.status === 'concluído' ? '#059669' : (order.status === 'em separação' ? '#2A7AE4' : '#f0fdf4') %>; border:2px solid <%= order.status === 'concluído' ? '#059669' : (order.status === 'em separação' ? '#2A7AE4' : '#cbd5e1') %>; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.9rem; transition:all 0.4s ease;">
+                          <% if (order.status === 'concluído') { %>✓<% } else if (order.status === 'em separação') { %>2<% } else { %>2<% } %>
+                        </div>
+                        <span style="font-size:0.75rem; color:#64748b; margin-top:6px; font-weight:500;">Separando</span>
+                      </div>
+                      
+                      <!-- Linha 2 -->
+                      <div style="flex:1; height:2px; background:<%= order.status === 'concluído' ? '#059669' : '#e2e8f0' %>; margin:0 -4px; margin-top:16px; transition:all 0.4s ease;"></div>
+
+                      <!-- Estágio 3: Entregue -->
+                      <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+                        <div style="width:36px; height:36px; border-radius:50%; background:<%= order.status === 'concluído' ? '#059669' : '#f0fdf4' %>; border:2px solid <%= order.status === 'concluído' ? '#059669' : '#cbd5e1' %>; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.9rem; transition:all 0.4s ease;">
+                          <% if (order.status === 'concluído') { %>✓<% } else { %>3<% } %>
+                        </div>
+                        <span style="font-size:0.75rem; color:#64748b; margin-top:6px; font-weight:500;">Entregue</span>
+                      </div>
+                    </div>
+                  </div>
                 </td>
                 <td class="my-orders__actions">
                   <a href="/pedido/<%= order.id %>" class="btn-small btn-view">Ver Detalhes</a>
@@ -78,6 +108,32 @@
               <div class="card-row">
                 <span class="card-label">Valor Total:</span>
                 <span class="card-value card-total"><%= order.total_price_formatted %></span>
+              </div>
+              <!-- Stepper Mobile -->
+              <div style="margin-top:16px; padding-top:16px; border-top:1px solid #e2e8f0;">
+                <p style="font-size:0.85rem; color:#64748b; font-weight:600; margin-bottom:12px;">Acompanhamento:</p>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                  <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:<%= order.status !== 'pendente' && order.status !== undefined ? '#059669' : '#f0fdf4' %>; border:2px solid <%= order.status !== 'pendente' && order.status !== undefined ? '#059669' : '#cbd5e1' %>; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.8rem;">
+                      <% if (order.status !== 'pendente' && order.status !== undefined) { %>✓<% } else { %>1<% } %>
+                    </div>
+                    <span style="font-size:0.7rem; color:#64748b; margin-top:4px;">Recebido</span>
+                  </div>
+                  <div style="height:2px; flex:1; background:<%= (order.status === 'em separação' || order.status === 'concluído') ? '#059669' : '#e2e8f0' %>;"></div>
+                  <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:<%= order.status === 'concluído' ? '#059669' : (order.status === 'em separação' ? '#2A7AE4' : '#f0fdf4') %>; border:2px solid <%= order.status === 'concluído' ? '#059669' : (order.status === 'em separação' ? '#2A7AE4' : '#cbd5e1') %>; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.8rem;">
+                      <% if (order.status === 'concluído') { %>✓<% } else if (order.status === 'em separação') { %>2<% } else { %>2<% } %>
+                    </div>
+                    <span style="font-size:0.7rem; color:#64748b; margin-top:4px;">Separando</span>
+                  </div>
+                  <div style="height:2px; flex:1; background:<%= order.status === 'concluído' ? '#059669' : '#e2e8f0' %>;"></div>
+                  <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:<%= order.status === 'concluído' ? '#059669' : '#f0fdf4' %>; border:2px solid <%= order.status === 'concluído' ? '#059669' : '#cbd5e1' %>; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.8rem;">
+                      <% if (order.status === 'concluído') { %>✓<% } else { %>3<% } %>
+                    </div>
+                    <span style="font-size:0.7rem; color:#64748b; margin-top:4px;">Entregue</span>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="my-orders__card-footer">

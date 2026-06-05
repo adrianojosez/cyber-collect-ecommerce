@@ -178,6 +178,46 @@ module.exports = {
     })
   },
 
+  payment(req, res) {
+    if (!req.session.user || !req.session.user.id) {
+      return res.redirect('/login')
+    }
+
+    ensureCart(req)
+    const cart = req.session.cart
+    if (!cart || cart.length === 0) {
+      return res.redirect('/cart')
+    }
+
+    const cartWithSubtotals = cart.map(item => {
+      const subtotal = parsePrice(item.preco) * item.quantidade
+      return {
+        ...item,
+        subtotal,
+        subtotalFormatted: formatCurrency(subtotal),
+        precoFormatted: formatCurrency(parsePrice(item.preco))
+      }
+    })
+
+    const total = cartWithSubtotals.reduce((sum, item) => sum + item.subtotal, 0)
+
+    return res.render('index', {
+      page: 'payment',
+      title: 'Pagamento',
+      description: 'Finalize seu pagamento com PIX ou Cartão de Crédito.',
+      keywords: 'pagamento, checkout, cyber-collect, pix, cartão',
+      ogTitle: 'Pagamento - Cyber-Collect',
+      ogDescription: 'Finalize o seu pedido com uma etapa de pagamento fictício.',
+      ogImage: '/images/logo.svg',
+      canonical: 'https://seusite.com/checkout/pagamento',
+      jsonLd: null,
+      button: '<a class="header__button button__void button" href="/login">Login</a>',
+      cart: cartWithSubtotals,
+      total: total,
+      totalFormatted: formatCurrency(total)
+    })
+  },
+
   async checkout(req, res) {
     const db = await Database()
 

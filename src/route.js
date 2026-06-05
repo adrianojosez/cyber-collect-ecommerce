@@ -37,11 +37,12 @@ route.post('/cart/add/:id', CartController.add)
 route.post('/cart/remove/:id', CartController.remove)
 route.post('/cart/update-quantity', CartController.updateQuantity)
 
-// Placeholder para checkout
+// Checkout e pagamento
 route.get('/checkout', (req, res) => {
-  res.send('Página de checkout em desenvolvimento. <a href="/cart">Voltar ao carrinho</a>')
+  return res.redirect('/checkout/pagamento')
 })
 
+route.get('/checkout/pagamento', CartController.payment)
 route.post('/checkout', CartController.checkout)
 
 route.get('/my-orders', CartController.myOrders)

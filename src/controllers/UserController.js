@@ -7,8 +7,9 @@ module.exports = {
         // Buscar todos os usuários
         const users = await db.all('SELECT id, name, email, tipo FROM users ORDER BY id DESC');
 
-        // Contar total de usuários
+        // Contar total de usuários e total de administradores
         const totalUsers = await db.get('SELECT COUNT(*) as total FROM users');
+        const totalAdmins = await db.get("SELECT COUNT(*) as total FROM users WHERE tipo = 'admin'");
 
         await db.close();
 
@@ -17,6 +18,7 @@ module.exports = {
             title: 'Gerenciar Usuários',
             stats: {
                 total: totalUsers.total,
+                adminCount: totalAdmins.total,
                 users: users
             },
             button: '<a href="/logout" class="button" style="background-color: #ff4d4d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Sair</a>'

@@ -43,7 +43,7 @@
                 </div>
                 <div class="metric-content">
                     <h3><%= stats.total %></h3>
-                    <p>Usuários Ativos</p>
+                    <p>Usuários Ativos (não excluídos)</p>
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
                     </svg>
                 </div>
                 <div class="metric-content">
-                    <h3><%= Math.floor(stats.total * 0.1) || 1 %></h3>
+                    <h3><%= typeof stats.adminCount !== 'undefined' ? stats.adminCount : stats.users.filter(user => user.tipo === 'admin').length %></h3>
                     <p>Administradores</p>
                 </div>
             </div>

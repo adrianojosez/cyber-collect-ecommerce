@@ -18,132 +18,171 @@ const formatCurrency = value =>
   }).format(value)
 
 const ensureCart = req => {
-  if (!req.session.cart) {
+  if (!req.session) {
+    req.session = {}
+  }
+  if (!Array.isArray(req.session.cart)) {
     req.session.cart = []
   }
   return req.session.cart
 }
 
 const persistCartItem = async (db, userId, productId, quantity) => {
-  const existingCartItem = await db.get(
-    'SELECT id, quantity FROM cart_items WHERE user_id = ? AND product_id = ?',
-    [userId, productId]
-  )
+  try {
+    if (!userId || !productId || !Number.isInteger(quantity) || quantity < 1) {
+      return
+    }
 
-  if (existingCartItem) {
-    await db.run(
-      'UPDATE cart_items SET quantity = ? WHERE id = ?',
-      [existingCartItem.quantity + quantity, existingCartItem.id]
+    const existingCartItem = await db.get(
+      'SELECT id, quantity FROM cart_items WHERE user_id = ? AND product_id = ?',
+      [userId, productId]
     )
-  } else {
-    await db.run(
-      'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)',
-      [userId, productId, quantity]
-    )
+
+    if (existingCartItem) {
+      await db.run(
+        'UPDATE cart_items SET quantity = ? WHERE id = ?',
+        [existingCartItem.quantity + quantity, existingCartItem.id]
+      )
+    } else {
+      await db.run(
+        'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)',
+        [userId, productId, quantity]
+      )
+    }
+  } catch (error) {
+    console.error('Erro ao persistir item do carrinho:', error)
   }
 }
 
 module.exports = {
   async add(req, res) {
-    const db = await Database()
-    const productId = req.params.id
-    const product = await db.get('SELECT * FROM products WHERE id = ?', productId)
+    let db = null
+    try {
+      db = await Database()
+      const productId = req.params.id
+      const product = await db.get('SELECT * FROM products WHERE id = ?', productId)
 
-    if (!product) {
+      if (!product) {
+        await db.close()
+        return res.redirect(req.get('Referrer') || '/')
+      }
+
+      const redirectUrl = req.get('Referrer') || '/'
+      const cart = ensureCart(req)
+      const existingItem = cart.find(item => String(item.id) === String(productId))
+
+      if (existingItem) {
+        existingItem.quantidade = Math.max(1, (existingItem.quantidade || 0) + 1)
+      } else {
+        cart.push({
+          id: product.id,
+          nome: product.name || 'Produto sem nome',
+          preco: product.price || 0,
+          imagem: product.image || null,
+          quantidade: 1
+        })
+      }
+
+      // Persistir no banco se usuário logado
+      if (req.session?.user?.id) {
+        await persistCartItem(db, req.session.user.id, productId, 1)
+      }
+
+      req.session.flash = {
+        type: 'success',
+        message: `"${product.name}" adicionado ao carrinho com sucesso!`
+      }
+
       await db.close()
+      return res.redirect(redirectUrl)
+    } catch (error) {
+      console.error('Erro ao adicionar item ao carrinho:', error)
+      if (db) await db.close()
       return res.redirect(req.get('Referrer') || '/')
     }
-
-    const redirectUrl = req.get('Referrer') || '/'
-    const cart = ensureCart(req)
-    const existingItem = cart.find(item => String(item.id) === String(productId))
-
-    if (existingItem) {
-      existingItem.quantidade += 1
-    } else {
-      cart.push({
-        id: product.id,
-        nome: product.name,
-        preco: product.price,
-        imagem: product.image,
-        quantidade: 1
-      })
-    }
-
-    if (req.session.user && req.session.user.id) {
-      await persistCartItem(db, req.session.user.id, productId, 1)
-    }
-
-    req.session.flash = {
-      type: 'success',
-      message: `"${product.name}" adicionado ao carrinho com sucesso!`
-    }
-
-    await db.close()
-    return res.redirect(redirectUrl)
   },
 
   async remove(req, res) {
-    ensureCart(req)
-    const db = await Database()
-    const productId = req.params.id
+    let db = null
+    try {
+      const cart = ensureCart(req)
+      const productId = req.params.id
 
-    if (req.session.user && req.session.user.id) {
-      await db.run(
-        'DELETE FROM cart_items WHERE user_id = ? AND product_id = ?',
-        [req.session.user.id, productId]
+      db = await Database()
+
+      // Remover do banco se usuário logado
+      if (req.session?.user?.id) {
+        await db.run(
+          'DELETE FROM cart_items WHERE user_id = ? AND product_id = ?',
+          [req.session.user.id, productId]
+        )
+      }
+
+      // Remover da sessão (funciona para convidados e logados)
+      req.session.cart = cart.filter(
+        item => String(item.id) !== String(productId)
       )
+
+      if (db) await db.close()
+
+      req.session.flash = {
+        type: 'info',
+        message: 'Produto removido do carrinho.'
+      }
+
+      return res.redirect('/cart')
+    } catch (error) {
+      console.error('Erro ao remover item do carrinho:', error)
+      if (db) await db.close()
+      return res.redirect('/cart')
     }
-
-    await db.close()
-    req.session.cart = req.session.cart.filter(
-      item => String(item.id) !== String(productId)
-    )
-
-    req.session.flash = {
-      type: 'info',
-      message: 'Produto removido do carrinho.'
-    }
-
-    return res.redirect('/cart')
   },
 
   async updateQuantity(req, res) {
-    ensureCart(req)
-    const db = await Database()
-    const productId = req.body.id || req.body.productId
-    const quantity = Number(req.body.quantity)
-    const validQuantity = Number.isNaN(quantity) || quantity < 1 ? 1 : quantity
+    let db = null
+    try {
+      const cart = ensureCart(req)
+      const productId = req.body.id || req.body.productId
+      const quantity = Number(req.body.quantity)
+      const validQuantity = Number.isNaN(quantity) || quantity < 1 ? 1 : quantity
 
-    const item = req.session.cart.find(
-      item => String(item.id) === String(productId)
-    )
-
-    if (item) {
-      item.quantidade = validQuantity
-    }
-
-    if (req.session.user && req.session.user.id) {
-      const existingCartItem = await db.get(
-        'SELECT id FROM cart_items WHERE user_id = ? AND product_id = ?',
-        [req.session.user.id, productId]
+      const item = cart.find(
+        item => String(item.id) === String(productId)
       )
 
-      if (existingCartItem) {
-        await db.run(
-          'UPDATE cart_items SET quantity = ? WHERE id = ?',
-          [validQuantity, existingCartItem.id]
-        )
-      } else {
-        await db.run(
-          'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)',
-          [req.session.user.id, productId, validQuantity]
-        )
+      // Atualizar quantidade na sessão
+      if (item) {
+        item.quantidade = Math.max(1, validQuantity)
       }
-    }
 
-    await db.close()
-    return res.redirect('/cart')
+      // Persistir no banco se usuário logado
+      if (req.session?.user?.id) {
+        db = await Database()
+        const existingCartItem = await db.get(
+          'SELECT id FROM cart_items WHERE user_id = ? AND product_id = ?',
+          [req.session.user.id, productId]
+        )
+
+        if (existingCartItem) {
+          await db.run(
+            'UPDATE cart_items SET quantity = ? WHERE id = ?',
+            [validQuantity, existingCartItem.id]
+          )
+        } else {
+          await db.run(
+            'INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)',
+            [req.session.user.id, productId, validQuantity]
+          )
+        }
+        await db.close()
+      }
+
+      return res.redirect('/cart')
+    } catch (error) {
+      console.error('Erro ao atualizar quantidade do carrinho:', error)
+      if (db) await db.close()
+      return res.redirect('/cart')
+    }
   },
 
   view(req, res) {

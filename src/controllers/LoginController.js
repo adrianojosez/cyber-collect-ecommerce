@@ -26,59 +26,78 @@ module.exports = {
             tipo: user.tipo
         }
 
+        // Merge carrinho de convidado com carrinho persistido (apenas para usuários comuns)
         if (user.tipo !== 'admin' && user.id) {
-            const guestCart = req.session.cart || []
+            const guestCart = Array.isArray(req.session.cart) ? req.session.cart : []
 
-            const persistedItems = await db.all(
-                `SELECT ci.product_id AS id, ci.quantity, p.name, p.price, p.image
-                 FROM cart_items ci
-                 JOIN products p ON p.id = ci.product_id
-                 WHERE ci.user_id = ?`,
-                [user.id]
-            )
+            try {
+                // Recuperar itens persistidos no banco
+                const persistedItems = await db.all(
+                    `SELECT ci.product_id AS id, ci.quantity, p.name, p.price, p.image
+                     FROM cart_items ci
+                     JOIN products p ON p.id = ci.product_id
+                     WHERE ci.user_id = ?`,
+                    [user.id]
+                ) || []
 
-            for (const item of guestCart) {
-                const existingItem = persistedItems.find(
-                    persisted => String(persisted.id) === String(item.id)
-                )
+                // Fazer merge dos itens do carrinho de convidado
+                for (const guestItem of guestCart) {
+                    if (!guestItem?.id) continue // Validação defensiva
 
-                if (existingItem) {
-                    await db.run(
-                        `UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?`,
-                        [existingItem.quantity + item.quantidade, user.id, item.id]
+                    const existingItem = persistedItems.find(
+                        persisted => String(persisted.id) === String(guestItem.id)
                     )
-                } else {
-                    await db.run(
-                        `INSERT OR IGNORE INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)`,
-                        [user.id, item.id, item.quantidade]
-                    )
+
+                    const itemQuantity = Math.max(1, guestItem.quantidade || 1)
+
+                    if (existingItem) {
+                        // Somar quantidades se o item já existe no banco
+                        await db.run(
+                            `UPDATE cart_items SET quantity = quantity + ? WHERE user_id = ? AND product_id = ?`,
+                            [itemQuantity, user.id, guestItem.id]
+                        )
+                    } else {
+                        // Inserir novo item se não existe
+                        await db.run(
+                            `INSERT OR IGNORE INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)`,
+                            [user.id, guestItem.id, itemQuantity]
+                        )
+                    }
                 }
+
+                // Recuperar carrinho atualizado do banco
+                const updatedItems = await db.all(
+                    `SELECT ci.product_id AS id, ci.quantity, p.name, p.price, p.image
+                     FROM cart_items ci
+                     JOIN products p ON p.id = ci.product_id
+                     WHERE ci.user_id = ?`,
+                    [user.id]
+                ) || []
+
+                // Atualizar sessão com itens do banco
+                req.session.cart = updatedItems.map(product => ({
+                    id: product.id,
+                    nome: product.name || 'Produto sem nome',
+                    preco: product.price || 0,
+                    imagem: product.image || null,
+                    quantidade: Math.max(1, product.quantity || 1)
+                }))
+            } catch (mergeError) {
+                console.error('Erro ao fazer merge do carrinho:', mergeError)
+                // Em caso de erro, manter o carrinho de convidado na sessão
+                req.session.cart = guestCart
             }
-
-            const updatedItems = await db.all(
-                `SELECT ci.product_id AS id, ci.quantity, p.name, p.price, p.image
-                 FROM cart_items ci
-                 JOIN products p ON p.id = ci.product_id
-                 WHERE ci.user_id = ?`,
-                [user.id]
-            )
-
-            req.session.cart = updatedItems.map(product => ({
-                id: product.id,
-                nome: product.name,
-                preco: product.price,
-                imagem: product.image,
-                quantidade: product.quantity
-            }))
         }
 
         await db.close()
 
         if (user.tipo === 'admin') {
+            // Limpar carrinho para admins
             req.session.cart = []
             return res.redirect('/admin/todos-os-produtos')
         } else {
-            if (!req.session.cart) {
+            // Garantir que o carrinho existe na sessão para usuários comuns
+            if (!Array.isArray(req.session.cart)) {
                 req.session.cart = []
             }
             return res.redirect('/')

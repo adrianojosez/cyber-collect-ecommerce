@@ -35,11 +35,17 @@ mobileThemeToggle?.addEventListener('click', () => {
 // Open search bar on mobile
 searchBtn.forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelector('.header__input').classList.toggle('show')
-    document.querySelector('.header__button').classList.toggle('show')
-    document.querySelector('.header__logo').classList.toggle('show')
-    document.querySelector('.icon-search').classList.toggle('show')
-    document.querySelector('.icon-plus').classList.toggle('show')
+    const headerInput = document.querySelector('.header__input')
+    const headerButton = document.querySelector('.header__button')
+    const headerLogo = document.querySelector('.header__logo')
+    const searchIcon = document.querySelector('.icon-search')
+    const plusIcon = document.querySelector('.icon-plus')
+
+    headerInput?.classList.toggle('show')
+    headerButton?.classList.toggle('show')
+    headerLogo?.classList.toggle('show')
+    searchIcon?.classList.toggle('show')
+    plusIcon?.classList.toggle('show')
   })
 })
 
@@ -58,17 +64,15 @@ prodLink.forEach(link => {
 function handleClick(event, action) {
   event.preventDefault()
   const modalForm = document.querySelector('.modal form')
-  // get data-id value in DOM for each target of click event
-  const itemCode = event.target.dataset.id
+  const itemCode = event.target?.dataset?.id
 
-  if (action == 'delete') {
-    // Set URL route to modal form action attribute
+  if (action === 'delete' && itemCode && modalForm) {
     modalForm.setAttribute('action', `/admin/todos-os-produtos/${itemCode}/${action}`)
     modal.openModal()
   }
 }
 
 // Set new product id when creating a new product
-addProduct.addEventListener('click', event => {
-  productId.setId()
+addProduct?.addEventListener('click', () => {
+  productId?.setId?.()
 })

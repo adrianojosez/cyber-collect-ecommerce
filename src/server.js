@@ -30,13 +30,12 @@ server.use((req, res, next) => {
   res.locals.flash = req.session.flash || null
   delete req.session.flash
 
-  if (!req.session.cart) {
-    req.session.cart = []
-  }
+  const cart = Array.isArray(req.session.cart) ? req.session.cart : []
+  req.session.cart = cart
 
-  res.locals.cart = req.session.cart
-  res.locals.cartItemCount = req.session.cart.reduce(
-    (count, item) => count + item.quantidade,
+  res.locals.cart = cart
+  res.locals.cartItemCount = cart.reduce(
+    (count, item) => count + (Number(item?.quantidade) || 0),
     0
   )
 

@@ -12,6 +12,10 @@ const ContactController = require('./controllers/ContactController')
 // saving all route functionalities that Express has
 const route = express.Router()
 
+const renderPage = (page, title, button) => (req, res) => {
+  res.render('index', { page, title, button })
+}
+
 const requireAdmin = (req, res, next) => {
   if (req.session.user && req.session.user.tipo === 'admin') {
     return next()
@@ -61,13 +65,11 @@ route.get('/logout', (req, res) => {
   });
 });
 
-route.get('/login', (req, res) =>
-  res.render('index', {
-    page: 'login',
-    title: 'Login',
-    button: '<div class="header__button button__void button">Login</div>'
-  })
-)
+route.get('/login', renderPage(
+  'login',
+  'Login',
+  '<div class="header__button button__void button">Login</div>'
+))
 
 // Rota de visualização de todos os produtos (Protegida)
 route.get('/admin/todos-os-produtos', requireAdmin, ProductController.viewAll);
@@ -82,103 +84,78 @@ route.get('/deletar-usuario', requireAdmin, UserController.deleteUser)
 
 route.get('/admin/:code', LoginController.open)
 
-route.get('/login-error', (req, res) =>
-  res.render('index', {
-    page: 'login-error',
-    title: 'Erro de Acesso',
-    button:
-      '<a class="header__button button__void button" href="login">Login</a>'
-  })
-)
+route.get('/login-error', renderPage(
+  'login-error',
+  'Erro de Acesso',
+  '<a class="header__button button__void button" href="login">Login</a>'
+))
 
-route.get('/pass-incorrect', (req, res) =>
-  res.render('index', {
-    page: 'pass-incorrect',
-    title: 'Sem Permissão',
-    button:
-      '<a class="header__button button__void button" href="/login">Login</a>'
-  })
-)
+route.get('/pass-incorrect', renderPage(
+  'pass-incorrect',
+  'Sem Permissão',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/link-invalido', (req, res) =>
-  res.render('index', {
-    page: 'link-invalido',
-    title: 'Link Inválido',
-    button:
-      '<a class="header__button button__void button" href="/login">Login</a>'
-  })
-)
+route.get('/link-invalido', renderPage(
+  'link-invalido',
+  'Link Inválido',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/politica', (req, res) => {
-    res.render('index', {
-        page: 'politica',
-        title: 'Política de Privacidade',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/politica', renderPage(
+  'politica',
+  'Política de Privacidade',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/quem-somos', (req, res) => {
-    res.render('index', {
-        page: 'quem-somos',
-        title: 'Quem Somos Nós',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/quem-somos', renderPage(
+  'quem-somos',
+  'Quem Somos Nós',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/fidelidade', (req, res) => {
-    res.render('index', {
-        page: 'fidelidade',
-        title: 'Programa Fidelidade',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/fidelidade', renderPage(
+  'fidelidade',
+  'Programa Fidelidade',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/lojas', (req, res) => {
-    res.render('index', {
-        page: 'lojas',
-        title: 'Nossas Lojas',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/lojas', renderPage(
+  'lojas',
+  'Nossas Lojas',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/franqueado', (req, res) => {
-    res.render('index', {
-        page: 'franqueado',
-        title: 'Seja um Franqueado',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/franqueado', renderPage(
+  'franqueado',
+  'Seja um Franqueado',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/anuncie', (req, res) => {
-    res.render('index', {
-        page: 'anuncie',
-        title: 'Anuncie Conosco',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/anuncie', renderPage(
+  'anuncie',
+  'Anuncie Conosco',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/termos', (req, res) => {
-    res.render('index', {
-        page: 'termos',
-        title: 'Termos e Garantia',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/termos', renderPage(
+  'termos',
+  'Termos e Garantia',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
-route.get('/faq', (req, res) => {
-    res.render('index', {
-        page: 'faq',
-        title: 'Dúvidas Frequentes',
-        button: '<a class="header__button button__void button" href="/login">Login</a>'
-    })
-})
+route.get('/faq', renderPage(
+  'faq',
+  'Dúvidas Frequentes',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+))
 
 // Rotas de Esqueci a Senha
-route.get('/esqueci-senha', (req, res) => res.render('index', {
-    page: 'esqueci-senha',
-    title: 'Recuperar Senha',
-    button: '<a class="header__button button__void button" href="/login">Login</a>'
-}));
+route.get('/esqueci-senha', renderPage(
+  'esqueci-senha',
+  'Recuperar Senha',
+  '<a class="header__button button__void button" href="/login">Login</a>'
+));
 
 route.post('/recuperar-senha', LoginController.recuperarSenha);
 

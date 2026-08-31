@@ -36,16 +36,15 @@ mobileThemeToggle?.addEventListener('click', () => {
 searchBtn.forEach(btn => {
   btn.addEventListener('click', () => {
     const headerInput = document.querySelector('.header__input')
-    const headerButton = document.querySelector('.header__button')
-    const headerLogo = document.querySelector('.header__logo')
-    const searchIcon = document.querySelector('.icon-search')
-    const plusIcon = document.querySelector('.icon-plus')
+    if (!headerInput) return
 
-    headerInput?.classList.toggle('show')
-    headerButton?.classList.toggle('show')
-    headerLogo?.classList.toggle('show')
-    searchIcon?.classList.toggle('show')
-    plusIcon?.classList.toggle('show')
+    headerInput.classList.toggle('show')
+    headerInput.focus()
+
+    document.querySelector('.header__button')?.classList.toggle('show')
+    document.querySelector('.header__logo')?.classList.toggle('show')
+    document.querySelector('.icon-search')?.classList.toggle('show')
+    document.querySelector('.icon-plus')?.classList.toggle('show')
   })
 })
 

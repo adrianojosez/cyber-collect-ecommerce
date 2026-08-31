@@ -1,5 +1,5 @@
 <section class="product__image">
-  <img loading="lazy" src="<%= product.image %>" alt="" aria-hidden="true" />
+  <img loading="lazy" src="<%= product.image %>" alt="Imagem do produto <%= product.name %>" />
 </section>
 
 <section class="product container">
@@ -20,8 +20,15 @@
     </form>
   </div>
 
-  <button onclick="shareProduct('<%= product.name %>', window.location.href)" class="share-btn" style="cursor: pointer; padding: 10px; border: none; background: #2A7AE4; color: white; border-radius: 5px; margin-top: 10px;">
-    <i class="fas fa-share-alt"></i> Compartilhar
+  <button
+    type="button"
+    onclick="shareProduct('<%= product.name %>', window.location.href)"
+    class="share-btn"
+    aria-label="Compartilhar produto <%= product.name %>"
+    style="cursor: pointer; padding: 10px; border: none; background: #2A7AE4; color: white; border-radius: 5px; margin-top: 10px;"
+  >
+    <i class="fas fa-share-alt" aria-hidden="true"></i>
+    <span>Compartilhar</span>
   </button>
 
 </section>

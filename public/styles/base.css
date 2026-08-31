@@ -179,34 +179,48 @@ input[type='number'] {
   color: var(--blue);
   background: transparent;
   border: 1px solid var(--blue);
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button__void:hover,
-.button__void:focus {
+.button__void:focus,
+.button__void:focus-visible {
   background: var(--blue-20);
+  transform: translateY(-1px);
 }
 
 .button__blue {
   color: var(--white);
   background: var(--blue);
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button__blue:hover,
-.button__blue:focus {
+.button__blue:focus,
+.button__blue:focus-visible {
   background: var(--blue-80);
+  transform: translateY(-1px);
 }
 
 .button__red {
   color: var(--white);
   background: var(--red);
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button__red:hover,
-.button__red:focus {
+.button__red:focus,
+.button__red:focus-visible {
   background: var(--red-80);
+  transform: translateY(-1px);
+}
+
+.button:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(42, 122, 228, 0.45);
+  outline-offset: 2px;
 }
 
 .sr-only {

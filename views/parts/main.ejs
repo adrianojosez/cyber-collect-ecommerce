@@ -20,11 +20,11 @@
   </div>
   <div class="products__card grid">
     <% starWars.forEach(product => { %>
-    <div>
+    <div class="product-card-item">
       <img loading="lazy" src="<%= product.image %>" alt="<%= product.altText %>" />
       <h3><%= product.name %></h3>
       <p><%= product.price %></p>
-      <a class="products__card--view" href="/produto/<%= product.id %>">Ver produto</a>
+      <a class="products__card--view" href="/produto/<%= product.id %>" aria-label="Ver detalhes do produto <%= product.name %>">Ver produto</a>
     </div>
     <% }) %>
   </div>
@@ -40,11 +40,11 @@
   </div>
   <div class="products__card grid">
     <% consoles.forEach(console => { %>
-    <div>
+    <div class="product-card-item">
       <img loading="lazy" src="<%= console.image %>" alt="<%= console.altText %>" />
       <h3><%= console.name %></h3>
       <p><%= console.price %></p>
-      <a class="products__card--view" href="/produto/<%= console.id %>">Ver produto</a>
+      <a class="products__card--view" href="/produto/<%= console.id %>" aria-label="Ver detalhes do produto <%= console.name %>">Ver produto</a>
     </div>
     <% }) %>
   </div>
@@ -60,11 +60,11 @@
   </div>
   <div class="products__card grid">
     <% diversos.forEach(misc => { %>
-    <div>
+    <div class="product-card-item">
       <img loading="lazy" src="<%= misc.image %>" alt="<%= misc.altText %>" />
       <h3><%= misc.name %></h3>
       <p><%= misc.price %></p>
-      <a class="products__card--view" href="/produto/<%= misc.id %>">Ver produto</a>
+      <a class="products__card--view" href="/produto/<%= misc.id %>" aria-label="Ver detalhes do produto <%= misc.name %>">Ver produto</a>
     </div>
     <% }) %>
   </div>

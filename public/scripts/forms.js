@@ -43,27 +43,29 @@ contactInputs.forEach(input => {
   })
 })
 
-const themeToggle = document.querySelector('#theme-toggle');
-const currentTheme = localStorage.getItem('theme');
+const themeToggle = document.querySelector('#theme-toggle')
+const currentTheme = localStorage.getItem('theme')
 
-// Verifica se o usuário já tinha uma preferência salva
-if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
+if (themeToggle) {
+  // Verifica se o usuário já tinha uma preferência salva
+  if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme)
     if (currentTheme === 'dark') {
-        themeToggle.textContent = '☀️'; // Ícone de sol para voltar ao claro
+      themeToggle.textContent = '☀️' // Ícone de sol para voltar ao claro
     }
-}
+  }
 
-themeToggle.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    
+  themeToggle.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme')
+
     if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        themeToggle.textContent = '🌙';
-        localStorage.setItem('theme', 'light');
+      document.documentElement.setAttribute('data-theme', 'light')
+      themeToggle.textContent = '🌙'
+      localStorage.setItem('theme', 'light')
     } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.textContent = '☀️';
-        localStorage.setItem('theme', 'dark');
+      document.documentElement.setAttribute('data-theme', 'dark')
+      themeToggle.textContent = '☀️'
+      localStorage.setItem('theme', 'dark')
     }
-});
+  })
+}

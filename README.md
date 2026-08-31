@@ -13,7 +13,7 @@ Neste repositório você encontrará uma página de e-commerce (versão do admin
 <!-- prettier-ignore -->
 | 🪧 Vitrine Dev |   |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ✨ Nome        | **TCC** - Adriano |
+| ✨ Nome        | **Ecommerce** - Adriano |
 | 🏷️ Tecnologias | Node, Express, SQLite3, EJS, CSS, JavaScript |
 | 🚀 URL         | [**Acesse o site**](https://tcc-ct2b.onrender.com/) ou veja como rodar localmente em [**⚙️ Como usar**](#howto) |
 | 🔥 Desafio     | [**Protótipo do Figma**]() |
@@ -25,7 +25,7 @@ Se você optou por experimentar a aplicação rodando-a localmente em seu comput
 1. Faça o download deste repositório através do botão verde **Code** no topo da página e, em seguida, clicando em **Download ZIP**. Ou, se preferir, através do terminal (Git Bash, Powershell, etc.), use o comando:
 
 ```
-git clone https://github.com/adrianojosez/tcc.git
+git clone https://github.com/adrianojosez/ecommerce.git
 ```
 
 2. Acesse a pasta do projeto com seu terminal;
@@ -98,7 +98,7 @@ For full access to the app functionalities, you can run it locally on your machi
 1. Download this repository by clicking the green **Code** button on top of the page and then clicking **Download ZIP** option. Or use the following command on your terminal (Git Bash, Powershell, etc.):
 
 ```
-git clone https://github.com/adrianojosez/tcc.git
+git clone https://github.com/adrianojosez/ecommerce.git
 ```
 
 2. Access the project root folder on your terminal;
@@ -110,7 +110,7 @@ git clone https://github.com/adrianojosez/tcc.git
 ```
 npm start
 
-> tcc@1.0.0 start
+> ecommerce@1.0.0 start
 > node .
 
 APP RUNNING ON PORT 3000
